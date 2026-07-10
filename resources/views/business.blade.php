@@ -63,7 +63,10 @@
             {{-- Deals --}}
             @if($coupons->isNotEmpty())
                 <section class="mt-8">
-                    <h2 class="font-display text-2xl font-semibold mb-2">Current deals</h2>
+                    <div class="flex flex-wrap items-end justify-between gap-3 mb-2">
+                        <h2 class="font-display text-2xl font-semibold">Current deals</h2>
+                        <a href="{{ route('coupons.show', $business) }}" class="text-sm font-medium hover:text-[color:var(--gold)]">All {{ $business->name }} coupons &amp; deals →</a>
+                    </div>
                     <div class="rule-gold mb-4"></div>
                     <div class="grid gap-4 sm:grid-cols-2">
                         @foreach($coupons as $coupon)
@@ -212,6 +215,9 @@
                 <ul class="text-sm space-y-2">
                     <li><a href="{{ route('city.category', [$business->city, $business->category]) }}" class="hover:text-[color:var(--gold)]">{{ $business->category->name }} in {{ $business->city->name }} →</a></li>
                     <li><a href="{{ route('city.show', $business->city) }}" class="hover:text-[color:var(--gold)]">All jewelry businesses in {{ $business->city->name }} →</a></li>
+                    @if($coupons->isNotEmpty())
+                        <li><a href="{{ route('coupons.show', $business) }}" class="hover:text-[color:var(--gold)]">{{ $business->name }} coupons &amp; deals →</a></li>
+                    @endif
                 </ul>
             </div>
         </aside>

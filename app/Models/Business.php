@@ -64,6 +64,15 @@ class Business extends Model
         return $this->hasMany(Review::class)->where('status', 'approved');
     }
 
+    public function liveCoupons()
+    {
+        return $this->hasMany(Coupon::class)
+            ->where('is_active', true)
+            ->where(function ($q) {
+                $q->whereNull('expires_at')->orWhere('expires_at', '>=', now()->toDateString());
+            });
+    }
+
     public function coupons()
     {
         return $this->hasMany(Coupon::class);

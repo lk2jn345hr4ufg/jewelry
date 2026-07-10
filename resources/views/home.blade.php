@@ -59,6 +59,32 @@
     </div>
 </section>
 
+{{-- Jewelry Discount Stores --}}
+@if($discountStores->isNotEmpty())
+<section class="max-w-6xl mx-auto px-4 py-14">
+    <div class="flex flex-wrap items-end justify-between gap-3 mb-2">
+        <h2 class="font-display text-3xl font-semibold">Jewelry Discount Stores</h2>
+        <a href="{{ route('coupons.index') }}" class="text-sm font-medium hover:text-[color:var(--gold)]">All coupons &amp; deals →</a>
+    </div>
+    <div class="rule-gold mb-8"></div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        @foreach($discountStores as $store)
+            <div class="card p-5 flex flex-col">
+                <a href="{{ route('coupons.show', $store) }}" class="font-display text-xl font-semibold hover:text-[color:var(--gold)]">{{ $store->name }}</a>
+                <p class="text-sm text-[color:var(--stone)] mt-1">{{ $store->category?->name }} · {{ $store->city?->full_name }}</p>
+                <p class="text-sm mt-2">
+                    <span class="font-medium" style="color:var(--gold)">{{ $store->codes_count }}</span> {{ Str::plural('coupon code', $store->codes_count) }} ·
+                    <span class="font-medium" style="color:var(--gold)">{{ $store->deals_count }}</span> {{ Str::plural('deal', $store->deals_count) }}
+                </p>
+                <div class="mt-auto pt-3 text-sm">
+                    <a href="{{ route('coupons.show', $store) }}" class="font-medium hover:text-[color:var(--gold)]">View offers →</a>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</section>
+@endif
+
 {{-- Recently Added --}}
 <section class="max-w-6xl mx-auto px-4 py-14">
     <h2 class="font-display text-3xl font-semibold mb-2">Recently Added</h2>

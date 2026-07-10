@@ -12,6 +12,20 @@
 </section>
 
 <div class="max-w-6xl mx-auto px-4 py-12">
+    @if($stores->isNotEmpty())
+        <div class="mb-12">
+            <h2 class="font-display text-2xl font-semibold mb-2">Discount stores</h2>
+            <div class="rule-gold mb-6"></div>
+            <div class="grid gap-3 grid-cols-2 lg:grid-cols-4">
+                @foreach($stores as $store)
+                    <a href="{{ route('coupons.show', $store) }}" class="card px-4 py-3 flex items-center justify-between text-sm">
+                        <span class="font-medium">{{ $store->name }}</span>
+                        <span class="text-xs text-[color:var(--stone)]">{{ $store->live_coupons_count }} {{ Str::plural('offer', $store->live_coupons_count) }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
     @if($coupons->isEmpty())
         <p class="text-[color:var(--stone)]">No active deals right now — check back soon.</p>
     @else
@@ -26,7 +40,7 @@
                         <p class="text-sm text-[color:var(--stone)] mt-1">{{ $coupon->description }}</p>
                     @endif
                     <div class="mt-3 text-sm">
-                        <a href="{{ route('business.show', $coupon->business) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $coupon->business->name }}</a>
+                        <a href="{{ route('coupons.show', $coupon->business) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $coupon->business->name }}</a>
                         <span class="text-[color:var(--stone)]"> · {{ $coupon->business->city?->full_name }}</span>
                     </div>
                     <div class="mt-auto pt-3 flex items-center justify-between">

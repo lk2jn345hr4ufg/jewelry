@@ -31,13 +31,26 @@ class HomeController extends Controller
             ->take(10)
             ->get();
 
+        $discountStores = Business::active()
+            ->whereHas('liveCoupons')
+            ->with(['city', 'category'])
+            ->withCount([
+                'liveCoupons',
+                'liveCoupons as codes_count' => fn ($q) => $q->whereNotNull('code')->where('code', '!=', ''),
+                'liveCoupons as deals_count' => fn ($q) => $q->where(fn ($w) => $w->whereNull('code')->orWhere('code', '')),
+            ])
+            ->orderByDesc('live_coupons_count')
+            ->orderBy('name')
+            ->take(8)
+            ->get();
+
         $latestReviews = Review::approved()
             ->with('business.city')
             ->latest()
             ->take(6)
             ->get();
 
-        return view('home', compact('cities', 'totalCities', 'categories', 'recent', 'latestReviews'));
+        return view('home', compact('cities', 'totalCities', 'categories', 'recent', 'latestReviews', 'discountStores'));
     }
 
     public function loadCities(Request $request)
