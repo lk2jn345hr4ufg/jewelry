@@ -1,0 +1,77 @@
+:root{
+  --porcelain:#FAF7F1;
+  --ink:#221D14;
+  --velvet:#14352C;
+  --velvet-deep:#0D2620;
+  --gold:#B08C3D;
+  --gold-light:#D9C08A;
+  --line:#E7DFCE;
+}
+html{scroll-behavior:smooth}
+body{background:var(--porcelain);color:var(--ink);font-family:'Karla',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.font-display{font-family:'Cormorant Garamond',Georgia,serif}
+
+/* Signature: the facet — a rotated gold square used as marker */
+.facet{display:inline-block;width:.5rem;height:.5rem;background:var(--gold);transform:rotate(45deg);flex:none}
+.facet--outline{background:transparent;border:1.5px solid var(--gold)}
+.eyebrow{display:flex;align-items:center;gap:.6rem;letter-spacing:.22em;text-transform:uppercase;font-size:.7rem;color:var(--gold);font-weight:700}
+.eyebrow::after{content:"";height:1px;background:var(--line);flex:1}
+
+.card{background:#fff;border:1px solid var(--line);border-top:2px solid var(--line);transition:border-color .25s,transform .25s,box-shadow .25s}
+.card:hover{border-top-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 30px -18px rgba(20,53,44,.4)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.4rem;font-weight:700;letter-spacing:.04em;transition:.2s}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#9a7930}
+.btn-outline{border:1px solid var(--gold);color:var(--velvet)}
+.btn-outline:hover{background:var(--gold);color:#fff}
+.btn-velvet{background:var(--velvet);color:#fff}
+.btn-velvet:hover{background:var(--velvet-deep)}
+
+.chip{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--line);background:#fff;padding:.4rem .85rem;font-size:.85rem;transition:.2s}
+.chip:hover{border-color:var(--gold);color:var(--velvet)}
+
+.stars{color:var(--gold);letter-spacing:.1em;white-space:nowrap}
+.stars .off{color:#D8D2C4}
+
+/* Search + suggestions */
+.suggest-wrap{position:relative}
+.suggest-panel{position:absolute;inset-inline:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line);box-shadow:0 18px 40px -20px rgba(20,53,44,.45);z-index:60;max-height:22rem;overflow:auto;display:none;text-align:left}
+.suggest-panel.open{display:block}
+.suggest-group{padding:.55rem .9rem .2rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.suggest-item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .9rem;font-size:.92rem;color:var(--ink)}
+.suggest-item:hover,.suggest-item.active{background:var(--porcelain)}
+.suggest-item .meta{color:#8b8574;font-size:.78rem}
+
+/* Coupon ticket */
+.coupon{background:#fff;border:1px dashed var(--gold);position:relative}
+.coupon::before,.coupon::after{content:"";position:absolute;width:14px;height:14px;background:var(--porcelain);border:1px dashed var(--gold);border-radius:50%;top:50%;transform:translateY(-50%)}
+.coupon::before{left:-8px;clip-path:inset(0 0 0 50%)}
+.coupon::after{right:-8px;clip-path:inset(0 50% 0 0)}
+.coupon-code{font-family:ui-monospace,monospace;letter-spacing:.2em;background:var(--porcelain);border:1px solid var(--line);padding:.35rem .8rem}
+
+#map,.map-frame{height:22rem;width:100%;border:1px solid var(--line);z-index:0}
+@media(min-width:768px){#map,.map-frame{height:26rem}}
+
+.hours-row{display:flex;justify-content:space-between;border-bottom:1px dotted var(--line);padding:.35rem 0;font-size:.9rem}
+.hours-row:last-child{border-bottom:0}
+
+.breadcrumbs{font-size:.82rem;color:#8b8574}
+.breadcrumbs a:hover{color:var(--gold)}
+.breadcrumbs .sep{display:inline-block;width:.32rem;height:.32rem;background:var(--gold-light);transform:rotate(45deg);margin:0 .5rem 1px}
+
+.rating-input{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:.15rem;font-size:1.7rem}
+.rating-input input{position:absolute;opacity:0;pointer-events:none}
+.rating-input label{color:#D8D2C4;cursor:pointer;transition:color .15s}
+.rating-input label:hover,.rating-input label:hover~label,
+.rating-input input:checked~label{color:var(--gold)}
+
+.field{width:100%;border:1px solid var(--line);background:#fff;padding:.65rem .85rem;font-size:.95rem}
+.field:focus{outline:2px solid var(--gold-light);outline-offset:0;border-color:var(--gold)}
+label.form-label{display:block;font-size:.8rem;font-weight:700;letter-spacing:.06em;margin-bottom:.3rem;color:var(--velvet)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}

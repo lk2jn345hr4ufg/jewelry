@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
+class Category extends Model
+{
+    protected $fillable = ['name', 'slug', 'description'];
+
+    protected static function booted(): void
+    {
+        static::saving(function (Category $category) {
+            if (empty($category->slug)) {
+                $category->slug = Str::slug($category->name);
+            }
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
+    }
+
+    public function cities()
+    {
+        return $this->belongsToMany(City::class);
+    }
+}
