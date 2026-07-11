@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'JewelFind — Find Jewelry Businesses Near You')
+@section('title', 'Gleamion.com — Find Jewelry Businesses Near You')
 
 @section('content')
 
@@ -49,7 +49,7 @@
         <div class="rule-gold mb-8"></div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             @foreach($categories as $category)
-                <a href="{{ route('search', ['q' => $category->name]) }}" class="group flex items-center gap-3 px-4 py-3 border border-[color:var(--line)] hover:border-[color:var(--champagne)] transition-colors">
+                <a href="{{ route('category.show', $category) }}" class="group flex items-center gap-3 px-4 py-3 border border-[color:var(--line)] hover:border-[color:var(--champagne)] transition-colors">
                     <span class="facet-sm" style="background:var(--champagne)"></span>
                     <span class="font-medium group-hover:text-[color:var(--gold)]">{{ $category->name }}</span>
                     <span class="ml-auto text-xs text-[color:var(--stone)]">{{ $category->businesses_count }}</span>

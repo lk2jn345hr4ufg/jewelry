@@ -1,4 +1,4 @@
-# JewelFind — Jewelry Business Directory
+# Gleamion.com — Jewelry Business Directory
 
 A mobile-friendly business listing website built with **Laravel 11 + MySQL**, dedicated exclusively to jewelry businesses: stores, custom ateliers, watch shops, repairers, gold buyers and more.
 

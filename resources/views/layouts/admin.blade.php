@@ -20,7 +20,7 @@
         <div class="p-5 flex items-center gap-3 border-b border-white/10">
             <span class="facet facet--outline !w-3 !h-3"></span>
             <div>
-                <p class="font-display text-xl font-semibold leading-none">JewelFind</p>
+                <p class="font-display text-xl font-semibold leading-none">Gleamion.com</p>
                 <p class="text-[0.6rem] uppercase tracking-[0.25em] text-goldlight mt-1">Admin panel</p>
             </div>
         </div>

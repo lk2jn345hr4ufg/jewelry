@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($q ? "Search: {$q}" : 'All Businesses') . ' — JewelFind')
+@section('title', ($q ? "Search: {$q}" : 'All Businesses') . ' — Gleamion.com')
 
 @section('content')
 <div class="max-w-6xl mx-auto px-4 py-8">

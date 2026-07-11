@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'JewelFind — Jewelry Business Directory')</title>
+    <title>@yield('title', 'Gleamion.com — Jewelry Business Directory')</title>
     <meta name="description" content="@yield('meta_description', 'Find trusted jewelry businesses near you: jewelers, watch repair, engagement rings, appraisers and more.')">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
             <span class="facet !w-3 !h-3 group-hover:rotate-[135deg] transition-transform duration-300"></span>
-            <span class="font-display text-2xl font-semibold tracking-wide">JewelFind</span>
+            <span class="font-display text-2xl font-semibold tracking-wide">Gleamion.com</span>
         </a>
         <nav class="flex items-center gap-2 sm:gap-6 text-sm">
             <a href="{{ route('home') }}" class="hover:text-[color:var(--champagne)] px-2 py-1">Home</a>
@@ -62,7 +62,7 @@
         <div>
             <div class="flex items-center gap-2 mb-3">
                 <span class="facet"></span>
-                <span class="font-display text-xl font-semibold">JewelFind</span>
+                <span class="font-display text-xl font-semibold">Gleamion.com</span>
             </div>
             <p class="text-white/60 leading-relaxed">A directory of jewelry businesses — jewelers, watchmakers, appraisers and designers in your city.</p>
         </div>
@@ -81,7 +81,7 @@
             </ul>
         </div>
     </div>
-    <div class="border-t border-white/10 py-4 text-center text-xs text-white/40">© {{ date('Y') }} JewelFind</div>
+    <div class="border-t border-white/10 py-4 text-center text-xs text-white/40">© {{ date('Y') }} Gleamion.com</div>
 </footer>
 
 <script>

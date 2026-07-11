@@ -6,7 +6,7 @@
         : "Jewelry Businesses in {$city->full_name}";
 @endphp
 
-@section('title', $pageTitle . ' — JewelFind')
+@section('title', $pageTitle . ' — Gleamion.com')
 @section('meta_description', "Browse {$total} " . ($category ? strtolower($category->name) : 'jewelry') . " businesses in {$city->full_name}: addresses, opening hours, reviews and map.")
 
 @section('content')

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\HomeController;
@@ -19,6 +20,9 @@ Route::get('/deals/{business}', [CouponController::class, 'show'])->name('coupon
 
 Route::get('/business/{business}', [BusinessController::class, 'show'])->name('business.show');
 Route::post('/business/{business}/reviews', [BusinessController::class, 'storeReview'])->name('business.review');
+
+Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/category/{category}/businesses', [CategoryController::class, 'loadBusinesses'])->name('category.businesses');
 
 Route::get('/jewelry/{city}', [CityController::class, 'show'])->name('city.show');
 Route::get('/jewelry/{city}/businesses', [CityController::class, 'loadBusinesses'])->name('city.businesses');

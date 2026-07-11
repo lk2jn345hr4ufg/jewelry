@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Stores, Coupons & Deals — JewelFind')
-@section('meta_description', 'Current coupons, promo codes and deals from jewelry stores in the JewelFind directory.')
+@section('title', 'Stores, Coupons & Deals — Gleamion.com')
+@section('meta_description', 'Current coupons, promo codes and deals from jewelry stores in the Gleamion.com directory.')
 
 @section('content')
 <section style="background:var(--ink)" class="text-white">

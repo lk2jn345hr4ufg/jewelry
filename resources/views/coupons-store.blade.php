@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $business->name . ' Coupons & Deals — ' . $business->city->full_name . ' — JewelFind')
+@section('title', $business->name . ' Coupons & Deals — ' . $business->city->full_name . ' — Gleamion.com')
 @section('meta_description', 'All verified ' . $business->name . ' coupon codes and deals in ' . $business->city->full_name . ': ' . $highlights['codes'] . ' promo codes and ' . $highlights['deals'] . ' deals, checked for expiry.')
 
 @section('content')

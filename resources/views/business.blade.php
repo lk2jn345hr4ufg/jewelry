@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $business->name . ' — ' . $business->city->full_name . ' — JewelFind')
+@section('title', $business->name . ' — ' . $business->city->full_name . ' — Gleamion.com')
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags((string) $business->about), 155))
 
 @section('content')
