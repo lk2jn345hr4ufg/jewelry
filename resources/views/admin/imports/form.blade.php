@@ -46,6 +46,8 @@
                 <li>Create cities and categories on the fly when a row names one that doesn't exist yet.</li>
                 <li>Derive the business name — and the city, when recognizable — from a profile URL column
                     (e.g. <code>…/profile/the-diamond-ring-company-san-jose/</code>).</li>
+                <li>Import per-day opening hours from split open/close columns (e.g. <code>opening_monday_open</code>).</li>
+                <li>Clean the data: decodes HTML entities, strips a trailing "— City" from names, removes utm_* tracking from websites.</li>
                 <li>Optionally import everything as hidden, so you can review before publishing.</li>
             </ul>
         </div>
