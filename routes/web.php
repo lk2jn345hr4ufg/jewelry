@@ -16,6 +16,7 @@ Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('searc
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/deals', [CouponController::class, 'index'])->name('coupons.index');
+Route::get('/deals/category/{category}', [CouponController::class, 'category'])->name('coupons.category');
 Route::get('/deals/{business}', [CouponController::class, 'show'])->name('coupons.show');
 
 Route::get('/business/{business}', [BusinessController::class, 'show'])->name('business.show');

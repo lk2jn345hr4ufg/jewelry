@@ -24,7 +24,49 @@ class CouponController extends Controller
             ->take(8)
             ->get();
 
-        return view('coupons', compact('coupons', 'stores'));
+        $dealCategories = $this->dealCategories();
+
+        $categoryBlocks = $dealCategories->take(4)->map(fn ($category) => [
+            'category' => $category,
+            'offers' => Coupon::live()
+                ->whereHas('business', fn ($q) => $q->where('is_active', true)->where('category_id', $category->id))
+                ->with('business.city')
+                ->latest()
+                ->take(3)
+                ->get(),
+            'stores' => Business::active()
+                ->where('category_id', $category->id)
+                ->whereHas('liveCoupons')
+                ->with('city')
+                ->withCount('liveCoupons')
+                ->orderByDesc('live_coupons_count')
+                ->take(4)
+                ->get(),
+        ]);
+
+        return view('coupons', compact('coupons', 'stores', 'dealCategories', 'categoryBlocks'));
+    }
+
+    public function category(Category $category)
+    {
+        $coupons = Coupon::live()
+            ->whereHas('business', fn ($q) => $q->where('is_active', true)->where('category_id', $category->id))
+            ->with('business.city')
+            ->latest()
+            ->paginate(12);
+
+        $stores = Business::active()
+            ->where('category_id', $category->id)
+            ->whereHas('liveCoupons')
+            ->with('city')
+            ->withCount('liveCoupons')
+            ->orderByDesc('live_coupons_count')
+            ->take(8)
+            ->get();
+
+        $otherCategories = $this->dealCategories()->reject(fn ($c) => $c->id === $category->id)->values();
+
+        return view('coupons-category', compact('category', 'coupons', 'stores', 'otherCategories'));
     }
 
     public function show(Business $business)
@@ -82,6 +124,22 @@ class CouponController extends Controller
             'business', 'offers', 'codes', 'deals', 'highlights',
             'cityCategories', 'alternatives', 'reviews', 'faq'
         ));
+    }
+
+    /** Categories that currently have stores with live offers, busiest first. */
+    protected function dealCategories()
+    {
+        return Category::whereHas('businesses', fn ($q) => $q->where('is_active', true)->whereHas('liveCoupons'))
+            ->get()
+            ->map(function ($category) {
+                $category->live_coupons_count = Coupon::live()
+                    ->whereHas('business', fn ($q) => $q->where('is_active', true)->where('category_id', $category->id))
+                    ->count();
+
+                return $category;
+            })
+            ->sortByDesc('live_coupons_count')
+            ->values();
     }
 
     /**
