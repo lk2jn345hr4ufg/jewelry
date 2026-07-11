@@ -31,6 +31,7 @@
             'Cities' => route('admin.cities.index'),
             'Reviews' => route('admin.reviews.index'),
             'Coupons' => route('admin.coupons.index'),
+            'Import' => route('admin.import.form'),
         ])
         <nav class="p-3 flex md:flex-col gap-1 overflow-x-auto text-sm">
             @foreach($nav as $label => $url)

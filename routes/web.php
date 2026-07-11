@@ -38,6 +38,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('businesses', Admin\BusinessController::class)->except(['show']);
         Route::resource('coupons', Admin\CouponController::class)->except(['show']);
 
+        Route::get('import', [Admin\ImportController::class, 'form'])->name('import.form');
+        Route::post('import/preview', [Admin\ImportController::class, 'preview'])->name('import.preview');
+        Route::post('import/run', [Admin\ImportController::class, 'run'])->name('import.run');
+
         Route::get('reviews', [Admin\ReviewController::class, 'index'])->name('reviews.index');
         Route::patch('reviews/{review}/status', [Admin\ReviewController::class, 'updateStatus'])->name('reviews.status');
         Route::delete('reviews/{review}', [Admin\ReviewController::class, 'destroy'])->name('reviews.destroy');
