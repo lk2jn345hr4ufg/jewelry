@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Gleamion.com'),
 
+    'site_password' => env('SITE_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

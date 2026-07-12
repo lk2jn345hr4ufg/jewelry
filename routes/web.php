@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Route;
 
 // ---------- Public ----------
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::post('/site-unlock', function (\Illuminate\Http\Request $request) {
+    $request->validate(['password' => ['required', 'string']]);
+
+    if (hash_equals((string) config('app.site_password'), $request->input('password'))) {
+        $request->session()->put('site_unlocked', true);
+
+        return redirect('/');
+    }
+
+    return back()->withErrors(['password' => 'Wrong password, try again.']);
+})->name('site.unlock');
 Route::get('/cities/load', [HomeController::class, 'loadCities'])->name('cities.load');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
@@ -42,6 +54,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('cities', Admin\CityController::class)->except(['show']);
         Route::resource('businesses', Admin\BusinessController::class)->except(['show']);
         Route::resource('coupons', Admin\CouponController::class)->except(['show']);
+
+        Route::get('site-check', [Admin\SiteCheckController::class, 'index'])->name('sitecheck.index');
+        Route::post('site-check/run', [Admin\SiteCheckController::class, 'run'])->name('sitecheck.run');
+        Route::post('site-check/reset', [Admin\SiteCheckController::class, 'reset'])->name('sitecheck.reset');
+        Route::post('site-check/hide-dead', [Admin\SiteCheckController::class, 'hideDead'])->name('sitecheck.hidedead');
+        Route::patch('site-check/{business}/hide', [Admin\SiteCheckController::class, 'hide'])->name('sitecheck.hide');
+
+        Route::resource('redirects', Admin\RedirectController::class)->except(['show'])
+            ->parameters(['redirects' => 'redirect']);
+        Route::post('redirects-bulk', [Admin\RedirectController::class, 'bulk'])->name('redirects.bulk');
+
+        Route::get('ai-rewrite', [Admin\AiContentController::class, 'index'])->name('ai.rewrite');
+        Route::post('ai-rewrite/run', [Admin\AiContentController::class, 'run'])->name('ai.rewrite.run');
 
         Route::get('import', [Admin\ImportController::class, 'form'])->name('import.form');
         Route::post('import/preview', [Admin\ImportController::class, 'preview'])->name('import.preview');
