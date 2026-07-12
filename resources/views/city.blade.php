@@ -46,7 +46,7 @@
 
     {{-- Businesses list --}}
     <div class="mt-8">
-        <h2 class="font-display text-2xl font-semibold mb-2">All profiles</h2>
+        <h2 class="font-display text-2xl font-semibold mb-2">All jewelry businesses profiles in {{ $city->name }}</h2>
         <div class="rule-gold mb-6"></div>
 
         @if($businesses->isEmpty())
@@ -69,7 +69,7 @@
 
     {{-- Biggest cities --}}
     <div class="mt-14">
-        <h2 class="font-display text-2xl font-semibold mb-2">Biggest cities</h2>
+        <h2 class="font-display text-2xl font-semibold mb-2">Biggest cities with jewelry businesses near {{ $city->name }}</h2>
         <div class="rule-gold mb-6"></div>
         <div class="flex flex-wrap gap-2">
             @foreach($biggestCities as $bc)

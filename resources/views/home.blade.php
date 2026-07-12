@@ -45,7 +45,7 @@
 {{-- Popular Categories --}}
 <section class="border-y border-[color:var(--line)] bg-white">
     <div class="max-w-6xl mx-auto px-4 py-14">
-        <h2 class="font-display text-3xl font-semibold mb-2">Popular Categories</h2>
+        <h2 class="font-display text-3xl font-semibold mb-2">Popular Jewelry Categories</h2>
         <div class="rule-gold mb-8"></div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             @foreach($categories as $category)
@@ -87,7 +87,7 @@
 
 {{-- Recently Added --}}
 <section class="max-w-6xl mx-auto px-4 py-14">
-    <h2 class="font-display text-3xl font-semibold mb-2">Recently Added</h2>
+    <h2 class="font-display text-3xl font-semibold mb-2">Recently Added Jewelry Companies and Stores</h2>
     <div class="rule-gold mb-8"></div>
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         @forelse($recent as $business)

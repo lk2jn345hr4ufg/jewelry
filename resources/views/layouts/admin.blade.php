@@ -32,6 +32,9 @@
             'Reviews' => route('admin.reviews.index'),
             'Coupons' => route('admin.coupons.index'),
             'Import' => route('admin.import.form'),
+            'Website check' => route('admin.sitecheck.index'),
+            'Redirects' => route('admin.redirects.index'),
+            'AI descriptions' => route('admin.ai.rewrite'),
         ])
         <nav class="p-3 flex md:flex-col gap-1 overflow-x-auto text-sm">
             @foreach($nav as $label => $url)
