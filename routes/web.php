@@ -7,22 +7,13 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SiteAccessController;
 use Illuminate\Support\Facades\Route;
 
 // ---------- Public ----------
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::post('/site-unlock', function (\Illuminate\Http\Request $request) {
-    $request->validate(['password' => ['required', 'string']]);
-
-    if (hash_equals((string) config('app.site_password'), $request->input('password'))) {
-        $request->session()->put('site_unlocked', true);
-
-        return redirect('/');
-    }
-
-    return back()->withErrors(['password' => 'Wrong password, try again.']);
-})->name('site.unlock');
+Route::post('/site-unlock', [SiteAccessController::class, 'unlock'])->name('site.unlock');
 Route::get('/cities/load', [HomeController::class, 'loadCities'])->name('cities.load');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
