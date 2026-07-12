@@ -48,6 +48,7 @@
             <tbody>
                 @forelse($businesses as $business)
                     <tr class="border-t border-line">
+                        <td class="p-3"><input type="checkbox" class="bulk-check" form="bulkForm" name="ids[]" value="{{ $business->id }}"></td>
                         <td class="p-3 font-bold">
                             {{ $business->name }}
                             <a href="{{ route('business.show', $business) }}" class="ml-1 text-ink/40 font-normal hover:text-gold" title="View public profile">↗</a>
@@ -74,7 +75,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="p-6 text-center text-ink/60">No businesses found.</td></tr>
+                    <tr><td colspan="6" class="p-6 text-center text-ink/60">No businesses found.</td></tr>
                 @endforelse
             </tbody>
         </table>
