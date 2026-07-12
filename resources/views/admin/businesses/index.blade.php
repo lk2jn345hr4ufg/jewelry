@@ -10,8 +10,18 @@
 
     <form method="get" class="mb-4 flex gap-2 max-w-md">
         <input class="field" type="search" name="q" value="{{ request('q') }}" placeholder="Search by name…">
+        <input type="hidden" name="status" value="{{ $status }}">
         <button class="btn btn-outline text-sm">Search</button>
     </form>
+
+    <div class="flex flex-wrap gap-2 mb-4">
+        @foreach(['all' => 'All', 'active' => 'Active', 'hidden' => 'Disabled'] as $key => $label)
+            <a href="{{ route('admin.businesses.index', array_filter(['status' => $key, 'q' => request('q')])) }}"
+               @class(['chip', '!border-gold !bg-velvet !text-white' => $status === $key])>
+                {{ $label }} <span @class(['text-ink/40', '!text-goldlight' => $status === $key])>{{ $counts[$key] }}</span>
+            </a>
+        @endforeach
+    </div>
 
     <div class="card overflow-x-auto">
         <table class="w-full text-sm">
@@ -34,11 +44,14 @@
                         <td class="p-3">{{ $business->category?->name }}</td>
                         <td class="p-3">{{ $business->city?->name }}</td>
                         <td class="p-3">
-                            @if($business->is_active)
-                                <span class="text-xs font-bold text-velvet border border-line bg-porcelain px-2 py-0.5">Active</span>
-                            @else
-                                <span class="text-xs font-bold text-ink/50 border border-line px-2 py-0.5">Hidden</span>
-                            @endif
+                            <form method="post" action="{{ route('admin.businesses.toggle', $business) }}" class="inline">
+                                @csrf @method('PATCH')
+                                @if($business->is_active)
+                                    <button class="text-xs font-bold text-velvet border border-line bg-porcelain px-2 py-0.5 hover:border-gold" title="Click to disable">● Active</button>
+                                @else
+                                    <button class="text-xs font-bold text-ink/50 border border-line px-2 py-0.5 hover:border-gold" title="Click to activate">○ Disabled</button>
+                                @endif
+                            </form>
                         </td>
                         <td class="p-3 text-right whitespace-nowrap">
                             <a href="{{ route('admin.businesses.edit', $business) }}" class="text-velvet font-bold hover:text-gold">Edit</a>

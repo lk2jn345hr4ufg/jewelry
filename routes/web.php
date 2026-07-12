@@ -44,6 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', Admin\CategoryController::class)->except(['show']);
         Route::resource('cities', Admin\CityController::class)->except(['show']);
         Route::resource('businesses', Admin\BusinessController::class)->except(['show']);
+        Route::patch('businesses/{business}/toggle', [Admin\BusinessController::class, 'toggle'])->name('businesses.toggle');
         Route::resource('coupons', Admin\CouponController::class)->except(['show']);
 
         Route::get('site-check', [Admin\SiteCheckController::class, 'index'])->name('sitecheck.index');

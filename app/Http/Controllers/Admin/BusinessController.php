@@ -12,13 +12,35 @@ class BusinessController extends Controller
 {
     public function index(Request $request)
     {
+        $status = $request->query('status', 'all');
+
         $businesses = Business::with(['city', 'category'])
             ->when($request->filled('q'), fn ($q) => $q->where('name', 'like', '%' . $request->q . '%'))
+            ->when($status === 'active', fn ($q) => $q->where('is_active', true))
+            ->when($status === 'hidden', fn ($q) => $q->where('is_active', false))
             ->latest()
             ->paginate(20)
             ->withQueryString();
 
-        return view('admin.businesses.index', compact('businesses'));
+        return view('admin.businesses.index', [
+            'businesses' => $businesses,
+            'status' => $status,
+            'counts' => [
+                'all' => Business::count(),
+                'active' => Business::where('is_active', true)->count(),
+                'hidden' => Business::where('is_active', false)->count(),
+            ],
+        ]);
+    }
+
+    /** Quick active/disabled switch from the list. */
+    public function toggle(Business $business)
+    {
+        $business->update(['is_active' => ! $business->is_active]);
+
+        return back()->with('ok', $business->is_active
+            ? "\"{$business->name}\" is now active and visible on the site."
+            : "\"{$business->name}\" is now disabled and hidden from the site.");
     }
 
     public function create()
