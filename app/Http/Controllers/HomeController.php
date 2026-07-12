@@ -15,7 +15,8 @@ class HomeController extends Controller
     public function index()
     {
         $cities = City::withCount('activeBusinesses')
-            ->orderByDesc('population')
+            ->orderByDesc('active_businesses_count')
+            ->orderBy('name')
             ->take(self::CITIES_PER_PAGE)
             ->get();
 
@@ -58,7 +59,8 @@ class HomeController extends Controller
         $offset = max(0, (int) $request->query('offset', 0));
 
         $cities = City::withCount('activeBusinesses')
-            ->orderByDesc('population')
+            ->orderByDesc('active_businesses_count')
+            ->orderBy('name')
             ->skip($offset)
             ->take(self::CITIES_PER_PAGE)
             ->get();

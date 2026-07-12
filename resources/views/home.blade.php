@@ -21,7 +21,7 @@
 {{-- Browse by City --}}
 <section class="max-w-6xl mx-auto px-4 py-14">
     <div class="flex items-end justify-between gap-4 mb-2">
-        <h2 class="font-display text-3xl font-semibold">Browse by City</h2>
+        <h2 class="font-display text-3xl font-semibold">Jewelry Businesses by City in the USA</h2>
         <span class="text-sm text-[color:var(--stone)]">{{ $totalCities }} cities</span>
     </div>
     <div class="rule-gold mb-8"></div>
