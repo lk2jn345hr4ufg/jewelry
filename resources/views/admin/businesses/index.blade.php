@@ -23,10 +23,21 @@
         @endforeach
     </div>
 
+    <form id="bulkForm" method="post" action="{{ route('admin.businesses.bulk') }}"
+          class="card p-3 mb-4 flex flex-wrap items-center gap-3"
+          onsubmit="return document.querySelectorAll('.bulk-check:checked').length > 0 || (alert('Select at least one business first.'), false);">
+        @csrf
+        <span class="text-sm text-ink/60"><span id="selCount">0</span> selected</span>
+        <button name="action" value="activate" class="btn btn-velvet !py-1.5 !px-3 text-sm">Activate selected</button>
+        <button name="action" value="disable" class="btn btn-outline !py-1.5 !px-3 text-sm"
+                onclick="return confirm('Disable the selected businesses? They will be hidden from the site.')">Disable selected</button>
+    </form>
+
     <div class="card overflow-x-auto">
         <table class="w-full text-sm">
             <thead class="bg-porcelain text-left text-xs uppercase tracking-widest text-gold">
                 <tr>
+                    <th class="p-3 w-8"><input type="checkbox" id="checkAll" title="Select all on this page"></th>
                     <th class="p-3">Name</th>
                     <th class="p-3">Category</th>
                     <th class="p-3">City</th>
@@ -63,10 +74,24 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="5" class="p-6 text-center text-ink/60">No businesses found.</td></tr>
+                    <tr><td colspan="7" class="p-6 text-center text-ink/60">No businesses found.</td></tr>
                 @endforelse
             </tbody>
         </table>
     </div>
     <div class="mt-4">{{ $businesses->links() }}</div>
+
+    <script>
+        const checkAll = document.getElementById('checkAll');
+        const boxes = document.querySelectorAll('.bulk-check');
+        const selCount = document.getElementById('selCount');
+        function refreshCount() {
+            selCount.textContent = document.querySelectorAll('.bulk-check:checked').length;
+        }
+        checkAll?.addEventListener('change', () => {
+            boxes.forEach(b => b.checked = checkAll.checked);
+            refreshCount();
+        });
+        boxes.forEach(b => b.addEventListener('change', refreshCount));
+    </script>
 @endsection

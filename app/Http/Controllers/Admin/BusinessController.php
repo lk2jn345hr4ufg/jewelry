@@ -33,6 +33,23 @@ class BusinessController extends Controller
         ]);
     }
 
+    /** Bulk activate / disable from the list. */
+    public function bulk(Request $request)
+    {
+        $data = $request->validate([
+            'action' => ['required', 'in:activate,disable'],
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['integer'],
+        ]);
+
+        $count = Business::whereIn('id', $data['ids'])
+            ->update(['is_active' => $data['action'] === 'activate']);
+
+        return back()->with('ok', $data['action'] === 'activate'
+            ? "{$count} businesses activated and visible on the site."
+            : "{$count} businesses disabled and hidden from the site.");
+    }
+
     /** Quick active/disabled switch from the list. */
     public function toggle(Business $business)
     {
