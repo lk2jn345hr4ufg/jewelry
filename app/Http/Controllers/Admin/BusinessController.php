@@ -14,17 +14,30 @@ class BusinessController extends Controller
     {
         $status = $request->query('status', 'all');
 
-        $businesses = Business::with(['city', 'category'])
+        $sort = $request->query('sort', 'latest');
+        $dir = $request->query('dir', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        $query = Business::with(['city', 'category'])
             ->when($request->filled('q'), fn ($q) => $q->where('name', 'like', '%' . $request->q . '%'))
             ->when($status === 'active', fn ($q) => $q->where('is_active', true))
-            ->when($status === 'hidden', fn ($q) => $q->where('is_active', false))
-            ->latest()
-            ->paginate(20)
-            ->withQueryString();
+            ->when($status === 'hidden', fn ($q) => $q->where('is_active', false));
+
+        match ($sort) {
+            'name' => $query->orderBy('name', $dir),
+            'city' => $query->leftJoin('cities', 'businesses.city_id', '=', 'cities.id')
+                ->orderBy('cities.name', $dir)
+                ->orderBy('businesses.name')
+                ->select('businesses.*'),
+            default => $query->latest(),
+        };
+
+        $businesses = $query->paginate(20)->withQueryString();
 
         return view('admin.businesses.index', [
             'businesses' => $businesses,
             'status' => $status,
+            'sort' => $sort,
+            'dir' => $dir,
             'counts' => [
                 'all' => Business::count(),
                 'active' => Business::where('is_active', true)->count(),

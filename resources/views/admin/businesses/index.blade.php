@@ -38,9 +38,17 @@
             <thead class="bg-porcelain text-left text-xs uppercase tracking-widest text-gold">
                 <tr>
                     <th class="p-3 w-8"><input type="checkbox" id="checkAll" title="Select all on this page"></th>
-                    <th class="p-3">Name</th>
+                    <th class="p-3">
+                        <a href="{{ route('admin.businesses.index', array_filter(['status' => $status, 'q' => request('q'), 'sort' => 'name', 'dir' => ($sort === 'name' && $dir === 'asc') ? 'desc' : 'asc'])) }}" class="hover:text-velvet">
+                            Name @if($sort === 'name'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
+                        </a>
+                    </th>
                     <th class="p-3">Category</th>
-                    <th class="p-3">City</th>
+                    <th class="p-3">
+                        <a href="{{ route('admin.businesses.index', array_filter(['status' => $status, 'q' => request('q'), 'sort' => 'city', 'dir' => ($sort === 'city' && $dir === 'asc') ? 'desc' : 'asc'])) }}" class="hover:text-velvet">
+                            City @if($sort === 'city'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
+                        </a>
+                    </th>
                     <th class="p-3">Status</th>
                     <th class="p-3 text-right">Actions</th>
                 </tr>
