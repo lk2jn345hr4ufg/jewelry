@@ -17,10 +17,18 @@ class BusinessController extends Controller
         $sort = $request->query('sort', 'latest');
         $dir = $request->query('dir', 'asc') === 'desc' ? 'desc' : 'asc';
 
+        $minCity = max(0, (int) $request->query('min_city', 0));
+
         $query = Business::with(['city', 'category'])
             ->when($request->filled('q'), fn ($q) => $q->where('name', 'like', '%' . $request->q . '%'))
             ->when($status === 'active', fn ($q) => $q->where('is_active', true))
-            ->when($status === 'hidden', fn ($q) => $q->where('is_active', false));
+            ->when($status === 'hidden', fn ($q) => $q->where('is_active', false))
+            ->when($minCity > 1, fn ($q) => $q->whereIn('city_id', function ($sub) use ($minCity) {
+                $sub->from('businesses')
+                    ->select('city_id')
+                    ->groupBy('city_id')
+                    ->havingRaw('COUNT(*) >= ?', [$minCity]);
+            }));
 
         match ($sort) {
             'name' => $query->orderBy('name', $dir),
@@ -38,6 +46,7 @@ class BusinessController extends Controller
             'status' => $status,
             'sort' => $sort,
             'dir' => $dir,
+            'minCity' => $minCity,
             'counts' => [
                 'all' => Business::count(),
                 'active' => Business::where('is_active', true)->count(),

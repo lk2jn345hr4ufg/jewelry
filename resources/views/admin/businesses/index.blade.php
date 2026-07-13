@@ -8,15 +8,25 @@
         <a href="{{ route('admin.businesses.create') }}" class="btn btn-gold text-sm">Add business</a>
     </div>
 
-    <form method="get" class="mb-4 flex gap-2 max-w-md">
-        <input class="field" type="search" name="q" value="{{ request('q') }}" placeholder="Search by name…">
+    <form method="get" class="mb-4 flex flex-wrap gap-2 items-center">
+        <input class="field max-w-xs" type="search" name="q" value="{{ request('q') }}" placeholder="Search by name…">
+        <label class="flex items-center gap-2 text-sm text-ink/70">
+            City has at least
+            <input class="field !w-20" type="number" name="min_city" min="0" value="{{ $minCity ?: '' }}" placeholder="0">
+            businesses
+        </label>
         <input type="hidden" name="status" value="{{ $status }}">
-        <button class="btn btn-outline text-sm">Search</button>
+        <input type="hidden" name="sort" value="{{ $sort }}">
+        <input type="hidden" name="dir" value="{{ $dir }}">
+        <button class="btn btn-outline text-sm">Apply</button>
+        @if($minCity > 1 || request('q'))
+            <a href="{{ route('admin.businesses.index', ['status' => $status]) }}" class="text-sm text-ink/50 hover:text-velvet">Clear</a>
+        @endif
     </form>
 
     <div class="flex flex-wrap gap-2 mb-4">
         @foreach(['all' => 'All', 'active' => 'Active', 'hidden' => 'Disabled'] as $key => $label)
-            <a href="{{ route('admin.businesses.index', array_filter(['status' => $key, 'q' => request('q')])) }}"
+            <a href="{{ route('admin.businesses.index', array_filter(['status' => $key, 'q' => request('q'), 'min_city' => $minCity ?: null, 'sort' => $sort, 'dir' => $dir])) }}"
                @class(['chip', '!border-gold !bg-velvet !text-white' => $status === $key])>
                 {{ $label }} <span @class(['text-ink/40', '!text-goldlight' => $status === $key])>{{ $counts[$key] }}</span>
             </a>
@@ -39,13 +49,13 @@
                 <tr>
                     <th class="p-3 w-8"><input type="checkbox" id="checkAll" title="Select all on this page"></th>
                     <th class="p-3">
-                        <a href="{{ route('admin.businesses.index', array_filter(['status' => $status, 'q' => request('q'), 'sort' => 'name', 'dir' => ($sort === 'name' && $dir === 'asc') ? 'desc' : 'asc'])) }}" class="hover:text-velvet">
+                        <a href="{{ route('admin.businesses.index', array_filter(['status' => $status, 'q' => request('q'), 'min_city' => $minCity ?: null, 'sort' => 'name', 'dir' => ($sort === 'name' && $dir === 'asc') ? 'desc' : 'asc'])) }}" class="hover:text-velvet">
                             Name @if($sort === 'name'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
                         </a>
                     </th>
                     <th class="p-3">Category</th>
                     <th class="p-3">
-                        <a href="{{ route('admin.businesses.index', array_filter(['status' => $status, 'q' => request('q'), 'sort' => 'city', 'dir' => ($sort === 'city' && $dir === 'asc') ? 'desc' : 'asc'])) }}" class="hover:text-velvet">
+                        <a href="{{ route('admin.businesses.index', array_filter(['status' => $status, 'q' => request('q'), 'min_city' => $minCity ?: null, 'sort' => 'city', 'dir' => ($sort === 'city' && $dir === 'asc') ? 'desc' : 'asc'])) }}" class="hover:text-velvet">
                             City @if($sort === 'city'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
                         </a>
                     </th>
