@@ -47,7 +47,12 @@ class CityController extends Controller
                 'url' => route('business.show', $b),
             ]);
 
-        $biggestCities = City::orderByDesc('population')->take(10)->get();
+        $biggestCities = City::whereHas('activeBusinesses')
+            ->withCount('activeBusinesses')
+            ->orderByDesc('active_businesses_count')
+            ->orderBy('name')
+            ->take(10)
+            ->get();
 
         // Categories connected to this city (admin-managed), fallback to categories with businesses here
         $cityCategories = $city->categories()->orderBy('name')->get();

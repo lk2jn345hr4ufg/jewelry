@@ -15,12 +15,13 @@ class HomeController extends Controller
     public function index()
     {
         $cities = City::withCount('activeBusinesses')
+            ->having('active_businesses_count', '>', 0)
             ->orderByDesc('active_businesses_count')
             ->orderBy('name')
             ->take(self::CITIES_PER_PAGE)
             ->get();
 
-        $totalCities = City::count();
+        $totalCities = City::whereHas('activeBusinesses')->count();
 
         $categories = Category::withCount(['businesses' => fn ($q) => $q->where('is_active', true)])
             ->orderByDesc('businesses_count')
@@ -59,11 +60,14 @@ class HomeController extends Controller
         $offset = max(0, (int) $request->query('offset', 0));
 
         $cities = City::withCount('activeBusinesses')
+            ->having('active_businesses_count', '>', 0)
             ->orderByDesc('active_businesses_count')
             ->orderBy('name')
             ->skip($offset)
             ->take(self::CITIES_PER_PAGE)
             ->get();
+
+        $totalCities = City::whereHas('activeBusinesses')->count();
 
         return response()->json([
             'cities' => $cities->map(fn ($c) => [
@@ -71,7 +75,7 @@ class HomeController extends Controller
                 'url' => route('city.show', $c),
                 'count' => $c->active_businesses_count,
             ]),
-            'hasMore' => City::count() > $offset + self::CITIES_PER_PAGE,
+            'hasMore' => $totalCities > $offset + self::CITIES_PER_PAGE,
         ]);
     }
 }
