@@ -103,6 +103,19 @@
                 </section>
             @endif
 
+            {{-- Similar stores --}}
+            @if($similar->isNotEmpty())
+                <section class="mt-8">
+                    <h2 class="font-display text-2xl font-semibold mb-2">Similar {{ $business->category?->name }} in other cities</h2>
+                    <div class="rule-gold mb-4"></div>
+                    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach($similar as $similarStore)
+                            @include('partials.business-card', ['business' => $similarStore])
+                        @endforeach
+                    </div>
+                </section>
+            @endif
+
             {{-- Reviews --}}
             <section class="mt-10" id="reviews">
                 <h2 class="font-display text-2xl font-semibold mb-2">Reviews</h2>
