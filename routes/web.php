@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 // ---------- Public ----------
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 Route::post('/site-unlock', [SiteAccessController::class, 'unlock'])->name('site.unlock');
 Route::get('/cities/load', [HomeController::class, 'loadCities'])->name('cities.load');

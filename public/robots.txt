@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /site-unlock
+
+Sitemap: https://gleamion.com/sitemap.xml
