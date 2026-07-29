@@ -9,10 +9,18 @@ use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cities = City::withCount(['businesses', 'categories'])->orderBy('name')->paginate(20);
-        return view('admin.cities.index', compact('cities'));
+        $sort = $request->query('sort', 'businesses');
+        $dir = $request->query('dir', 'desc') === 'asc' ? 'asc' : 'desc';
+
+        $cities = City::withCount(['businesses', 'categories'])
+            ->when($sort === 'name', fn ($q) => $q->orderBy('name', $dir))
+            ->when($sort === 'businesses', fn ($q) => $q->orderBy('businesses_count', $dir)->orderBy('name'))
+            ->paginate(20)
+            ->withQueryString();
+
+        return view('admin.cities.index', compact('cities', 'sort', 'dir'));
     }
 
     public function create()

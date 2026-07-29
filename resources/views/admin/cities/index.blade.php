@@ -12,10 +12,18 @@
         <table class="w-full text-sm">
             <thead class="bg-porcelain text-left text-xs uppercase tracking-widest text-gold">
                 <tr>
-                    <th class="p-3">Name</th>
+                    <th class="p-3">
+                        <a href="{{ route('admin.cities.index', ['sort' => 'name', 'dir' => ($sort === 'name' && $dir === 'asc') ? 'desc' : 'asc']) }}" class="hover:text-velvet">
+                            Name @if($sort === 'name'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
+                        </a>
+                    </th>
                     <th class="p-3">State</th>
                     <th class="p-3">Coordinates</th>
-                    <th class="p-3">Businesses</th>
+                    <th class="p-3">
+                        <a href="{{ route('admin.cities.index', ['sort' => 'businesses', 'dir' => ($sort === 'businesses' && $dir === 'desc') ? 'asc' : 'desc']) }}" class="hover:text-velvet">
+                            Businesses @if($sort === 'businesses'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
+                        </a>
+                    </th>
                     <th class="p-3">Linked categories</th>
                     <th class="p-3 text-right">Actions</th>
                 </tr>
