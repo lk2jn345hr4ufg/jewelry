@@ -18,9 +18,11 @@ class BusinessController extends Controller
         $dir = $request->query('dir', 'asc') === 'desc' ? 'desc' : 'asc';
 
         $minCity = max(0, (int) $request->query('min_city', 0));
+        $cityId = (int) $request->query('city_id', 0);
 
         $query = Business::with(['city', 'category'])
             ->when($request->filled('q'), fn ($q) => $q->where('name', 'like', '%' . $request->q . '%'))
+            ->when($cityId > 0, fn ($q) => $q->where('city_id', $cityId))
             ->when($status === 'active', fn ($q) => $q->where('is_active', true))
             ->when($status === 'hidden', fn ($q) => $q->where('is_active', false))
             ->when($minCity > 1, fn ($q) => $q->whereIn('city_id', function ($sub) use ($minCity) {
@@ -47,6 +49,8 @@ class BusinessController extends Controller
             'sort' => $sort,
             'dir' => $dir,
             'minCity' => $minCity,
+            'cityId' => $cityId,
+            'cities' => \App\Models\City::whereHas('businesses')->orderBy('name')->get(['id', 'name', 'state']),
             'counts' => [
                 'all' => Business::count(),
                 'active' => Business::where('is_active', true)->count(),
