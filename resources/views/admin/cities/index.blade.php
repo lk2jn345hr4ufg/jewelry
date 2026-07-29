@@ -24,6 +24,11 @@
                             Businesses @if($sort === 'businesses'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
                         </a>
                     </th>
+                    <th class="p-3">
+                        <a href="{{ route('admin.cities.index', ['sort' => 'active', 'dir' => ($sort === 'active' && $dir === 'desc') ? 'asc' : 'desc']) }}" class="hover:text-velvet">
+                            Active @if($sort === 'active'){{ $dir === 'asc' ? '▲' : '▼' }}@endif
+                        </a>
+                    </th>
                     <th class="p-3">Linked categories</th>
                     <th class="p-3 text-right">Actions</th>
                 </tr>
@@ -35,6 +40,7 @@
                         <td class="p-3">{{ $city->state }}</td>
                         <td class="p-3 text-ink/60">{{ $city->lat }}, {{ $city->lng }}</td>
                         <td class="p-3">{{ $city->businesses_count }}</td>
+                        <td class="p-3">{{ $city->active_businesses_count }}</td>
                         <td class="p-3">{{ $city->categories_count }}</td>
                         <td class="p-3 text-right whitespace-nowrap">
                             <a href="{{ route('admin.cities.edit', $city) }}" class="text-velvet font-bold hover:text-gold">Edit</a>

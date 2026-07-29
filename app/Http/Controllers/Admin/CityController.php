@@ -14,9 +14,10 @@ class CityController extends Controller
         $sort = $request->query('sort', 'businesses');
         $dir = $request->query('dir', 'desc') === 'asc' ? 'asc' : 'desc';
 
-        $cities = City::withCount(['businesses', 'categories'])
+        $cities = City::withCount(['businesses', 'categories', 'activeBusinesses'])
             ->when($sort === 'name', fn ($q) => $q->orderBy('name', $dir))
             ->when($sort === 'businesses', fn ($q) => $q->orderBy('businesses_count', $dir)->orderBy('name'))
+            ->when($sort === 'active', fn ($q) => $q->orderBy('active_businesses_count', $dir)->orderBy('name'))
             ->paginate(20)
             ->withQueryString();
 
