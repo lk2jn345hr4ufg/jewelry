@@ -48,7 +48,8 @@
 
         <div>
             <label class="form-label" for="description">Description / terms</label>
-            <textarea class="field" id="description" name="description" rows="3">{{ old('description', $coupon->description) }}</textarea>
+            <div id="descEditor" class="bg-white border border-line" style="min-height:8rem"></div>
+            <textarea name="description" id="description" class="hidden">{{ old('description', $coupon->description) }}</textarea>
             @error('description')<p class="text-red-700 text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
@@ -62,4 +63,39 @@
             <a href="{{ route('admin.coupons.index') }}" class="btn btn-outline">Cancel</a>
         </div>
     </form>
+
+@push('head')
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script>
+        (function () {
+            const textarea = document.getElementById('description');
+            const quill = new Quill('#descEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+            // Load existing content
+            if (textarea.value.trim() !== '') {
+                quill.clipboard.dangerouslyPasteHTML(textarea.value);
+            }
+            // Sync to the hidden textarea before submit
+            const form = textarea.closest('form');
+            form.addEventListener('submit', function () {
+                const html = quill.root.innerHTML;
+                textarea.value = (quill.getText().trim() === '') ? '' : html;
+            });
+        })();
+    </script>
+@endpush
+
 @endsection

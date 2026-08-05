@@ -5,7 +5,7 @@
     @endif
     <p class="font-semibold mt-1">{{ $coupon->title }}</p>
     @if($coupon->description)
-        <p class="text-sm text-[color:var(--stone)] mt-1">{{ $coupon->description }}</p>
+        <p class="text-sm text-[color:var(--stone)] mt-1">{!! $coupon->description !!}</p>
     @endif
     <div class="mt-3 text-sm">
         <a href="{{ route('coupons.show', $coupon->business) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $coupon->business->name }}</a>

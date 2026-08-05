@@ -72,7 +72,7 @@
                         @endif
                         <p class="font-semibold mt-1">{{ $coupon->title }}</p>
                         @if($coupon->description)
-                            <p class="text-sm text-[color:var(--stone)] mt-1">{{ $coupon->description }}</p>
+                            <p class="text-sm text-[color:var(--stone)] mt-1">{!! $coupon->description !!}</p>
                         @endif
                         <div class="mt-auto pt-3 flex items-center justify-between">
                             <button type="button" onclick="navigator.clipboard.writeText('{{ $coupon->code }}'); this.textContent='Copied!'"
@@ -102,7 +102,7 @@
                         @endif
                         <p class="font-semibold mt-1">{{ $coupon->title }}</p>
                         @if($coupon->description)
-                            <p class="text-sm text-[color:var(--stone)] mt-1">{{ $coupon->description }}</p>
+                            <p class="text-sm text-[color:var(--stone)] mt-1">{!! $coupon->description !!}</p>
                         @endif
                         <div class="mt-auto pt-3 flex items-center justify-between">
                             <span class="text-xs text-[color:var(--stone)]">No code needed</span>

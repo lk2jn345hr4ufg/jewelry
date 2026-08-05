@@ -13,6 +13,7 @@
         } } };
     </script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @stack('head')
 </head>
 <body class="font-body bg-porcelain min-h-screen md:flex">
 
@@ -57,5 +58,6 @@
         @endif
         @yield('content')
     </main>
+    @stack('scripts')
 </body>
 </html>
