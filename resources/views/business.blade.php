@@ -44,7 +44,11 @@
                 </div>
                 <div class="card p-5">
                     <h3 class="font-display text-xl font-semibold mb-2">Opening hours</h3>
-                    @if($business->hours)
+                    @if(($business->hours['always_open'] ?? false))
+                        <p class="inline-flex items-center gap-2 text-sm font-medium" style="color:var(--gold)">
+                            <span class="facet-sm" style="background:var(--gold)"></span> Open 24/7
+                        </p>
+                    @elseif($business->hours)
                         <dl class="text-sm space-y-1">
                             @foreach($business->hours as $day => $time)
                                 <div class="flex justify-between gap-4">
@@ -215,7 +219,11 @@
 
             <div class="card p-5">
                 <p class="eyebrow mb-3">Opening hours</p>
-                @if($business->hours)
+                @if(($business->hours['always_open'] ?? false))
+                    <p class="inline-flex items-center gap-2 text-sm font-medium" style="color:var(--gold)">
+                        <span class="facet-sm" style="background:var(--gold)"></span> Open 24/7
+                    </p>
+                @elseif($business->hours)
                     <dl class="text-sm space-y-1.5">
                         @foreach($business->hours as $day => $time)
                             <div class="flex justify-between gap-4">

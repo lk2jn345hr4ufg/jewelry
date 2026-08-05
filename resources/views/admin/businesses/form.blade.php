@@ -91,12 +91,19 @@
 
         <div>
             <span class="form-label">Opening hours <span class="font-normal text-ink/50">(leave blank for closed days)</span></span>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+
+            <label class="flex items-center gap-2 text-sm mb-3">
+                <input type="checkbox" name="always_open" id="alwaysOpen" value="1"
+                       @checked(old('always_open', ($business->hours['always_open'] ?? false)))>
+                <span class="font-bold">Open 24/7</span> <span class="text-ink/50">— online store, always open</span>
+            </label>
+
+            <div id="hoursGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 @foreach($days as $day)
                     <label class="flex items-center gap-3 text-sm">
                         <span class="w-10 font-bold">{{ $day }}</span>
                         <input class="field !py-1.5" name="hours[{{ $day }}]" placeholder="10:00 – 18:00"
-                               value="{{ old('hours.'.$day, $business->hours[$day] ?? '') }}">
+                               value="{{ old('hours.'.$day, is_array($business->hours ?? null) ? ($business->hours[$day] ?? '') : '') }}">
                     </label>
                 @endforeach
             </div>
@@ -112,4 +119,21 @@
             <a href="{{ route('admin.businesses.index') }}" class="btn btn-outline">Cancel</a>
         </div>
     </form>
+
+@push('scripts')
+    <script>
+        (function () {
+            const cb = document.getElementById('alwaysOpen');
+            const grid = document.getElementById('hoursGrid');
+            if (!cb || !grid) return;
+            function sync() {
+                grid.style.opacity = cb.checked ? '0.4' : '1';
+                grid.style.pointerEvents = cb.checked ? 'none' : 'auto';
+            }
+            cb.addEventListener('change', sync);
+            sync();
+        })();
+    </script>
+@endpush
+
 @endsection

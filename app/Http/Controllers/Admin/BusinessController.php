@@ -144,7 +144,12 @@ class BusinessController extends Controller
         ]);
 
         $data['is_active'] = $request->boolean('is_active');
-        $data['hours'] = array_filter($request->input('hours', []), fn ($v) => filled($v));
+
+        if ($request->boolean('always_open')) {
+            $data['hours'] = ['always_open' => true];
+        } else {
+            $data['hours'] = array_filter($request->input('hours', []), fn ($v) => filled($v));
+        }
 
         return $data;
     }
