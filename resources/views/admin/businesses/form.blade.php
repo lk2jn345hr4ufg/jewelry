@@ -37,8 +37,8 @@
             </div>
             <div>
                 <label class="form-label" for="city_id">City</label>
-                <select class="field" id="city_id" name="city_id" required>
-                    <option value="">— select —</option>
+                <select class="field" id="city_id" name="city_id">
+                    <option value="">— No city —</option>
                     @foreach($cities as $city)
                         <option value="{{ $city->id }}" @selected(old('city_id', $business->city_id) == $city->id)>{{ $city->full_name }}</option>
                     @endforeach

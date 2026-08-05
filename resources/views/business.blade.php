@@ -1,14 +1,18 @@
 @extends('layouts.app')
 
-@section('title', $business->name . ' — ' . $business->city->full_name . ' — Gleamion.com')
+@section('title', $business->name . ($business->city ? ' — ' . $business->city->full_name : '') . ' — Gleamion.com')
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags((string) $business->about), 155))
 
 @section('content')
 <div class="max-w-6xl mx-auto px-4 py-8">
 
     @include('partials.breadcrumbs', ['crumbs' => [
-        ['label' => $business->city->full_name, 'url' => route('city.show', $business->city)],
-        ['label' => $business->category->name, 'url' => route('city.category', [$business->city, $business->category])],
+        @if($business->city)
+            ['label' => $business->city->full_name, 'url' => route('city.show', $business->city)],
+            ['label' => $business->category->name, 'url' => route('city.category', [$business->city, $business->category])],
+        @else
+            ['label' => $business->category->name, 'url' => route('category.show', $business->category)],
+        @endif
         ['label' => $business->name],
     ]])
 
@@ -16,7 +20,7 @@
 
         {{-- Main column --}}
         <div>
-            <p class="eyebrow mb-2">{{ $business->category->name }} · {{ $business->city->full_name }}</p>
+            <p class="eyebrow mb-2">{{ $business->category->name }}@if($business->city) · {{ $business->city->full_name }}@endif</p>
             <h1 class="font-display text-4xl font-semibold">{{ $business->name }}</h1>
             <div class="mt-2">@include('partials.rating', ['rating' => $business->averageRating()])
                 <span class="text-sm text-[color:var(--stone)]">{{ $reviews->count() }} {{ \Illuminate\Support\Str::plural('review', $reviews->count()) }}</span>
@@ -34,7 +38,9 @@
                 <div class="card p-5">
                     <h3 class="font-display text-xl font-semibold mb-2">Address</h3>
                     <p class="text-sm text-gray-700">{{ $business->address ?: '—' }}</p>
-                    <p class="text-sm text-[color:var(--stone)] mt-1">{{ $business->city->full_name }}</p>
+                    @if($business->city)
+                        <p class="text-sm text-[color:var(--stone)] mt-1">{{ $business->city->full_name }}</p>
+                    @endif
                 </div>
                 <div class="card p-5">
                     <h3 class="font-display text-xl font-semibold mb-2">Opening hours</h3>
@@ -189,7 +195,7 @@
                 <dl class="text-sm space-y-3 text-white/90">
                     <div>
                         <dt class="text-white/50 text-xs uppercase tracking-wider mb-0.5">Address</dt>
-                        <dd>{{ $business->address ?: '—' }}<br>{{ $business->city->full_name }}</dd>
+                        <dd>{{ $business->address ?: '—' }}@if($business->city)<br>{{ $business->city->full_name }}@endif</dd>
                     </div>
                     @if($business->phone)
                         <div>
@@ -226,8 +232,12 @@
             <div class="card p-5">
                 <p class="eyebrow mb-3">Browse similar</p>
                 <ul class="text-sm space-y-2">
-                    <li><a href="{{ route('city.category', [$business->city, $business->category]) }}" class="hover:text-[color:var(--gold)]">{{ $business->category->name }} in {{ $business->city->name }} →</a></li>
-                    <li><a href="{{ route('city.show', $business->city) }}" class="hover:text-[color:var(--gold)]">All jewelry businesses in {{ $business->city->name }} →</a></li>
+                    @if($business->city)
+                        <li><a href="{{ route('city.category', [$business->city, $business->category]) }}" class="hover:text-[color:var(--gold)]">{{ $business->category->name }} in {{ $business->city->name }} →</a></li>
+                        <li><a href="{{ route('city.show', $business->city) }}" class="hover:text-[color:var(--gold)]">All jewelry businesses in {{ $business->city->name }} →</a></li>
+                    @else
+                        <li><a href="{{ route('category.show', $business->category) }}" class="hover:text-[color:var(--gold)]">More {{ $business->category->name }} →</a></li>
+                    @endif
                     @if($coupons->isNotEmpty())
                         <li><a href="{{ route('coupons.show', $business) }}" class="hover:text-[color:var(--gold)]">{{ $business->name }} coupons &amp; deals →</a></li>
                     @endif

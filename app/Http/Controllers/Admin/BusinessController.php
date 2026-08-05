@@ -130,7 +130,7 @@ class BusinessController extends Controller
             'name' => ['required', 'string', 'max:150'],
             'slug' => ['nullable', 'string', 'max:180', 'unique:businesses,slug' . ($id ? ",$id" : '')],
             'category_id' => ['required', 'exists:categories,id'],
-            'city_id' => ['required', 'exists:cities,id'],
+            'city_id' => ['nullable', 'exists:cities,id'],
             'about' => ['nullable', 'string', 'max:5000'],
             'address' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
