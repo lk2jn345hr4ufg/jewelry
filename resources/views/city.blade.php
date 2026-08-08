@@ -3,7 +3,7 @@
 @php
     $pageTitle = $category
         ? "{$category->name} in {$city->full_name}"
-        : "Jewelry Businesses in {$city->full_name}";
+        : "Jewelry stores & Businesses in {$city->name}";
 @endphp
 
 @section('title', $pageTitle . ' — Gleamion.com')
