@@ -6,15 +6,17 @@
 @section('content')
 <div class="max-w-6xl mx-auto px-4 py-8">
 
-    @include('partials.breadcrumbs', ['crumbs' => [
-        @if($business->city)
-            ['label' => $business->city->full_name, 'url' => route('city.show', $business->city)],
-            ['label' => $business->category->name, 'url' => route('city.category', [$business->city, $business->category])],
-        @else
-            ['label' => $business->category->name, 'url' => route('category.show', $business->category)],
-        @endif
-        ['label' => $business->name],
-    ]])
+    @php
+        $crumbs = [];
+        if ($business->city) {
+            $crumbs[] = ['label' => $business->city->full_name, 'url' => route('city.show', $business->city)];
+            $crumbs[] = ['label' => $business->category->name, 'url' => route('city.category', [$business->city, $business->category])];
+        } else {
+            $crumbs[] = ['label' => $business->category->name, 'url' => route('category.show', $business->category)];
+        }
+        $crumbs[] = ['label' => $business->name];
+    @endphp
+    @include('partials.breadcrumbs', ['crumbs' => $crumbs])
 
     <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
 
