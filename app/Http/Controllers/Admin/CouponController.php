@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\Coupon;
+use App\Support\HtmlSanitizer;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -59,39 +60,14 @@ class CouponController extends Controller
             'code' => ['nullable', 'string', 'max:60'],
             'discount' => ['nullable', 'string', 'max:60'],
             'description' => ['nullable', 'string', 'max:2000'],
-            'expires_at' => ['nullable', 'date'],
+            'starts_at' => ['nullable', 'date'],
+            'expires_at' => ['nullable', 'date', 'after_or_equal:starts_at'],
+            'deep_link' => ['nullable', 'url', 'max:500'],
         ]);
-        $data['description'] = $this->sanitizeHtml($data['description'] ?? null);
+        $data['description'] = HtmlSanitizer::clean($data['description'] ?? null);
         $data['is_active'] = $request->boolean('is_active');
 
         return $data;
-    }
-
-    /** Allow only a small set of safe formatting tags from the rich-text editor. */
-    protected function sanitizeHtml(?string $html): ?string
-    {
-        if (blank($html)) {
-            return null;
-        }
-
-        // Strip everything except a basic allowlist.
-        $clean = strip_tags($html, '<p><br><strong><em><u><b><i><ul><ol><li><a>');
-
-        // Remove any attributes except href on <a>, and force safe links.
-        $clean = preg_replace_callback('/<a\b[^>]*>/i', function ($m) {
-            if (preg_match('/href\s*=\s*"([^"]*)"/i', $m[0], $h)) {
-                $url = $h[1];
-                if (preg_match('~^(https?:)?//~i', $url) || str_starts_with($url, '/')) {
-                    return '<a href="'.htmlspecialchars($url, ENT_QUOTES).'" rel="nofollow noopener" target="_blank">';
-                }
-            }
-            return '<a>';
-        }, $clean);
-
-        // Drop attributes from all other allowed tags.
-        $clean = preg_replace('/<(p|br|strong|em|u|b|i|ul|ol|li)\b[^>]*>/i', '<$1>', $clean);
-
-        return trim($clean) === '' ? null : $clean;
     }
 
 }

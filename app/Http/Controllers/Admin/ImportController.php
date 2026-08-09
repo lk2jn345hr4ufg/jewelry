@@ -388,7 +388,7 @@ class ImportController extends Controller
             }
         }
 
-        return Str::limit($url, 250, '');
+        return Str::limit($url, 191, ''); // matches the varchar(191) website column
     }
 
     /** Strips the UTF-8 BOM and decodes HTML entities like &#8211;. */

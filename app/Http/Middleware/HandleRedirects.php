@@ -17,8 +17,8 @@ class HandleRedirects
 
         $path = '/'.ltrim($request->path(), '/');
 
-        // Never redirect the admin panel or health check.
-        if (str_starts_with($path, '/admin') || $path === '/up') {
+        // Never redirect the admin panel, the API or the health check.
+        if (str_starts_with($path, '/admin') || str_starts_with($path, '/api') || $path === '/up') {
             return $next($request);
         }
 
