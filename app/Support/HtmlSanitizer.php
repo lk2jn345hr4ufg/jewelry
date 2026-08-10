@@ -16,7 +16,12 @@ class HtmlSanitizer
             return null;
         }
 
-        $clean = strip_tags($html, '<p><br><strong><em><u><b><i><ul><ol><li><a>');
+        // Drop these outright: strip_tags would remove the tag but leave the
+        // script or stylesheet body behind as visible text.
+        $html = preg_replace('~<(script|style)\b[^>]*>.*?</\1\s*>~is', '', $html);
+        $html = preg_replace('~<(script|style)\b[^>]*>.*~is', '', (string) $html);
+
+        $clean = strip_tags((string) $html, '<p><br><strong><em><u><b><i><ul><ol><li><a>');
 
         // Keep only href on <a>, and only links we consider safe.
         $clean = preg_replace_callback('/<a\b[^>]*>/i', function ($m) {

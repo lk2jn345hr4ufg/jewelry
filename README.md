@@ -111,3 +111,17 @@ Notes:
 - `countries`, `categories` and `sources` are stored on the coupon as received and
   returned unchanged; they accumulate across imports instead of being replaced.
 - Requests are limited to 60 per minute and 500 offers per batch.
+
+## Running the tests
+
+```bash
+composer install
+mysql -u root -e "CREATE DATABASE jewelry_directory_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+composer test          # or: vendor/bin/phpunit
+```
+
+`phpunit.xml` points the suite at `jewelry_directory_test` and rebuilds it on
+every run, so the development database is left alone. `tests/Feature/Api`
+covers the offers API: authentication, store matching and creation, upsert by
+slug, accumulating metadata, validation atomicity, sanitising, and the
+visibility rules behind `get_offers`.
