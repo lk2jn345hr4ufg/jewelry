@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\StoreUrl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -9,7 +10,8 @@ class Business extends Model
 {
     protected $fillable = [
         'name', 'slug', 'category_id', 'city_id', 'about', 'address',
-        'phone', 'phone_alt', 'website', 'email', 'lat', 'lng', 'hours', 'is_active',
+        'phone', 'phone_alt', 'website', 'logo_url', 'website_host', 'email',
+        'lat', 'lng', 'hours', 'is_active', 'origin',
     ];
 
     protected $casts = [
@@ -30,6 +32,11 @@ class Business extends Model
                     $slug = $base . '-' . $i++;
                 }
                 $business->slug = $slug;
+            }
+
+            // Keep the matching host in step with the website, whoever edits it.
+            if ($business->isDirty('website')) {
+                $business->website_host = StoreUrl::host($business->website);
             }
         });
     }
@@ -64,13 +71,10 @@ class Business extends Model
         return $this->hasMany(Review::class)->where('status', 'approved');
     }
 
+    /** Delegates to Coupon::scopeLive so the "is it live?" rule lives in one place. */
     public function liveCoupons()
     {
-        return $this->hasMany(Coupon::class)
-            ->where('is_active', true)
-            ->where(function ($q) {
-                $q->whereNull('expires_at')->orWhere('expires_at', '>=', now()->toDateString());
-            });
+        return $this->hasMany(Coupon::class)->live();
     }
 
     public function coupons()

@@ -11,6 +11,13 @@
         @csrf
         @if($coupon->exists) @method('PUT') @endif
 
+        @if($coupon->origin === 'api')
+            <div class="border-l-4 border-amber-500 bg-amber-50 p-3 text-sm">
+                Imported through the offers API as <code>{{ $coupon->slug }}</code>.
+                Edits here are overwritten the next time the feed sends this offer.
+            </div>
+        @endif
+
         <div>
             <label class="form-label" for="business_id">Business</label>
             <select class="field" id="business_id" name="business_id" required>
@@ -28,7 +35,7 @@
             @error('title')<p class="text-red-700 text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
-        <div class="grid sm:grid-cols-3 gap-4">
+        <div class="grid sm:grid-cols-2 gap-4">
             <div>
                 <label class="form-label" for="code">Code</label>
                 <input class="field" id="code" name="code" value="{{ old('code', $coupon->code) }}" placeholder="SPARKLE15">
@@ -39,11 +46,27 @@
                 <input class="field" id="discount" name="discount" value="{{ old('discount', $coupon->discount) }}" placeholder="15% OFF">
             </div>
             <div>
+                <label class="form-label" for="starts_at">Starts</label>
+                <input class="field" id="starts_at" name="starts_at" type="date"
+                       value="{{ old('starts_at', $coupon->starts_at?->format('Y-m-d')) }}">
+                <p class="text-xs text-[color:var(--stone)] mt-1">Leave empty to publish immediately.</p>
+                @error('starts_at')<p class="text-red-700 text-xs mt-1">{{ $message }}</p>@enderror
+            </div>
+            <div>
                 <label class="form-label" for="expires_at">Expires</label>
                 <input class="field" id="expires_at" name="expires_at" type="date"
                        value="{{ old('expires_at', $coupon->expires_at?->format('Y-m-d')) }}">
+                <p class="text-xs text-[color:var(--stone)] mt-1">Inclusive — the offer still runs on this day.</p>
                 @error('expires_at')<p class="text-red-700 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
+        </div>
+
+        <div>
+            <label class="form-label" for="deep_link">Deal link</label>
+            <input class="field" id="deep_link" name="deep_link" type="url"
+                   value="{{ old('deep_link', $coupon->deep_link) }}" placeholder="https://store.example.com/sale">
+            <p class="text-xs text-[color:var(--stone)] mt-1">Where the offer sends visitors. Defaults to the store website.</p>
+            @error('deep_link')<p class="text-red-700 text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
         <div>

@@ -71,7 +71,7 @@
         @foreach($discountStores as $store)
             <div class="card p-5 flex flex-col">
                 <a href="{{ route('coupons.show', $store) }}" class="font-display text-xl font-semibold hover:text-[color:var(--gold)]">{{ $store->name }}</a>
-                <p class="text-sm text-[color:var(--stone)] mt-1">{{ $store->category?->name }} · {{ $store->city?->full_name }}</p>
+                <p class="text-sm text-[color:var(--stone)] mt-1">{{ collect([$store->category?->name, $store->city?->full_name])->filter()->implode(' · ') }}</p>
                 <p class="text-sm mt-2">
                     <span class="font-medium" style="color:var(--gold)">{{ $store->codes_count }}</span> {{ Str::plural('coupon code', $store->codes_count) }} ·
                     <span class="font-medium" style="color:var(--gold)">{{ $store->deals_count }}</span> {{ Str::plural('deal', $store->deals_count) }}

@@ -78,3 +78,50 @@ database/seeders              Demo data + admin account
 resources/views               Blade templates (public + admin)
 routes/web.php                All routes
 ```
+
+## Vouchers API
+
+Two token-authenticated endpoints let an external feed push coupons in and read
+back what is currently live.
+
+| Method | Path | Purpose |
+|---|---|---|
+| `POST` | `/api/submit_offers` | Import a batch of offers (upsert by offer `slug`) |
+| `GET` | `/api/get_offers` | List live offers so the client can de-duplicate |
+
+Send the token in the `X-API-Token` header. Configure it, plus the import
+behaviour, in `.env`:
+
+```dotenv
+VOUCHERS_API_TOKENS=                    # comma-separated; empty means the API is closed
+VOUCHERS_AUTOCREATE_STORES=true         # create a business for an unknown shop_url
+VOUCHERS_AUTOCREATE_STORE_ACTIVE=false  # keep new stores hidden until an admin completes them
+VOUCHERS_DEFAULT_CATEGORY_ID=           # category for auto-created stores
+VOUCHERS_COUPON_ACTIVE=true             # publish imported coupons immediately
+```
+
+Notes:
+
+- Offers are keyed by `slug`, so re-sending a batch updates rather than duplicates.
+  Manual edits made in the admin panel are overwritten by the next import.
+- A `shop_url` is matched on its host alone. For a chain the coupon attaches to a
+  single branch — the active one with the lowest id.
+- Auto-created stores have no city or address, so they do not appear on city pages
+  until an admin fills them in. Find them under **Businesses → From API**.
+- `countries`, `categories` and `sources` are stored on the coupon as received and
+  returned unchanged; they accumulate across imports instead of being replaced.
+- Requests are limited to 60 per minute and 500 offers per batch.
+
+## Running the tests
+
+```bash
+composer install
+mysql -u root -e "CREATE DATABASE jewelry_directory_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+composer test          # or: vendor/bin/phpunit
+```
+
+`phpunit.xml` points the suite at `jewelry_directory_test` and rebuilds it on
+every run, so the development database is left alone. `tests/Feature/Api`
+covers the offers API: authentication, store matching and creation, upsert by
+slug, accumulating metadata, validation atomicity, sanitising, and the
+visibility rules behind `get_offers`.

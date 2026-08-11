@@ -25,6 +25,8 @@ class BusinessController extends Controller
             ->when($cityId > 0, fn ($q) => $q->where('city_id', $cityId))
             ->when($status === 'active', fn ($q) => $q->where('is_active', true))
             ->when($status === 'hidden', fn ($q) => $q->where('is_active', false))
+            // Stores the offers API created on the fly still need a city and address.
+            ->when($status === 'imported', fn ($q) => $q->where('origin', 'api'))
             ->when($minCity > 1, fn ($q) => $q->whereIn('city_id', function ($sub) use ($minCity) {
                 $sub->from('businesses')
                     ->select('city_id')
@@ -55,6 +57,7 @@ class BusinessController extends Controller
                 'all' => Business::count(),
                 'active' => Business::where('is_active', true)->count(),
                 'hidden' => Business::where('is_active', false)->count(),
+                'imported' => Business::where('origin', 'api')->count(),
             ],
         ]);
     }
