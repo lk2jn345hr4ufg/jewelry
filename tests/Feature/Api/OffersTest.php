@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Models\Business;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Coupon;
 use App\Models\RedirectRule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -267,6 +268,36 @@ class OffersTest extends TestCase
             array_column($first, 'slug'),
             array_column($second, 'slug')
         ));
+    }
+
+    public function test_public_pages_render_for_a_store_the_feed_created_without_a_city(): void
+    {
+        config(['vouchers.autocreate_store_active' => true]);
+
+        $this->submit([$this->offer([
+            'shop_name' => 'Blue Nile',
+            'shop_url' => 'https://bluenile.com/',
+            'slug' => 'bluenile-offer',
+        ])])->assertOk();
+
+        $store = Business::where('website_host', 'bluenile.com')->sole();
+        $this->assertNull($store->city_id);
+
+        // Every city-scoped link and sentence has to fall away cleanly.
+        $this->get('/deals')->assertOk()->assertSee('Blue Nile');
+        $this->get("/deals/{$store->slug}")->assertOk();
+        $this->get("/business/{$store->slug}")->assertOk();
+    }
+
+    public function test_a_store_that_has_a_city_still_shows_it(): void
+    {
+        $city = City::create(['name' => 'New York', 'state' => 'NY']);
+        $this->store->update(['city_id' => $city->id]);
+
+        $this->submit([$this->offer()])->assertOk();
+
+        $this->get('/deals')->assertOk()->assertSee('New York, NY');
+        $this->get("/deals/{$this->store->slug}")->assertOk()->assertSee('New York, NY');
     }
 
     public function test_a_catch_all_redirect_rule_does_not_swallow_the_api(): void

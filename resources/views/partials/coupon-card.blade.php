@@ -9,7 +9,9 @@
     @endif
     <div class="mt-3 text-sm">
         <a href="{{ route('coupons.show', $coupon->business) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $coupon->business->name }}</a>
-        <span class="text-[color:var(--stone)]"> · {{ $coupon->business->city?->full_name }}</span>
+        @if($coupon->business->city)
+            <span class="text-[color:var(--stone)]"> · {{ $coupon->business->city->full_name }}</span>
+        @endif
     </div>
     <div class="mt-auto pt-3 flex items-center justify-between">
         @if($coupon->code)

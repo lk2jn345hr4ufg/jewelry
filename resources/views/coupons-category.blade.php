@@ -33,7 +33,7 @@
                 @foreach($stores as $store)
                     <a href="{{ route('coupons.show', $store) }}" class="card px-4 py-3 text-sm">
                         <span class="block font-medium">{{ $store->name }}</span>
-                        <span class="text-xs text-[color:var(--stone)]">{{ $store->city?->full_name }} · {{ $store->live_coupons_count }} {{ Str::plural('offer', $store->live_coupons_count) }}</span>
+                        <span class="text-xs text-[color:var(--stone)]">{{ collect([$store->city?->full_name, $store->live_coupons_count.' '.Str::plural('offer', $store->live_coupons_count)])->filter()->implode(' · ') }}</span>
                     </a>
                 @endforeach
             </div>

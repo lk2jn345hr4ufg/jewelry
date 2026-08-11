@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $business->name . ' Coupons & Deals — ' . $business->city->full_name . ' — Gleamion.com')
-@section('meta_description', 'All verified ' . $business->name . ' coupon codes and deals in ' . $business->city->full_name . ': ' . $highlights['codes'] . ' promo codes and ' . $highlights['deals'] . ' deals, checked for expiry.')
+@section('title', $business->name . ' Coupons & Deals' . ($business->city ? ' — ' . $business->city->full_name : '') . ' — Gleamion.com')
+@section('meta_description', 'All verified ' . $business->name . ' coupon codes and deals' . ($business->city ? ' in ' . $business->city->full_name : '') . ': ' . $highlights['codes'] . ' promo codes and ' . $highlights['deals'] . ' deals, checked for expiry.')
 
 @section('content')
 <div class="max-w-6xl mx-auto px-4 pt-6">
@@ -16,7 +16,7 @@
         <p class="eyebrow mb-2">Discount store</p>
         <h1 class="font-display text-3xl sm:text-5xl font-semibold">{{ $business->name }} Coupons &amp; Deals</h1>
         <p class="mt-3 text-[color:var(--stone)] max-w-3xl">
-            {{ $business->name }} is a {{ strtolower($business->category->name) }} business in {{ $business->city->full_name }}.
+            {{ $business->name }} is a {{ strtolower($business->category->name) }} business{{ $business->city ? ' in '.$business->city->full_name : '' }}.
             Below {{ $highlights['total'] === 1 ? 'is the 1 verified offer' : 'are all ' . $highlights['total'] . ' verified offers' }}
             currently available — {{ $highlights['codes'] }} {{ Str::plural('promo code', $highlights['codes']) }}
             and {{ $highlights['deals'] }} {{ Str::plural('deal', $highlights['deals']) }} — each checked against its expiry date.
@@ -116,7 +116,8 @@
         @endif
     </section>
 
-    {{-- Categories --}}
+    {{-- Categories: every link here is city-scoped, so an online-only store has none. --}}
+    @if($business->city)
     <section id="categories" class="pt-12" style="scroll-margin-top:1rem">
         <h2 class="font-display text-3xl font-semibold mb-2">Categories</h2>
         <div class="rule-gold mb-8"></div>
@@ -135,6 +136,7 @@
             @endforeach
         </div>
     </section>
+    @endif
 
     {{-- Alternatives --}}
     <section id="alternatives" class="pt-12" style="scroll-margin-top:1rem">
@@ -147,7 +149,7 @@
                 @foreach($alternatives as $store)
                     <div class="card p-5 flex flex-col">
                         <a href="{{ route('coupons.show', $store) }}" class="font-display text-xl font-semibold hover:text-[color:var(--gold)]">{{ $store->name }}</a>
-                        <p class="text-sm text-[color:var(--stone)] mt-1">{{ $store->category?->name }} · {{ $store->city?->full_name }}</p>
+                        <p class="text-sm text-[color:var(--stone)] mt-1">{{ collect([$store->category?->name, $store->city?->full_name])->filter()->implode(' · ') }}</p>
                         <p class="text-sm mt-2">
                             <span class="font-medium" style="color:var(--gold)">{{ $store->codes_count }}</span> {{ Str::plural('code', $store->codes_count) }} ·
                             <span class="font-medium" style="color:var(--gold)">{{ $store->deals_count }}</span> {{ Str::plural('deal', $store->deals_count) }}
@@ -196,7 +198,7 @@
                 Looking to save at {{ $business->name }}? This page collects every active {{ $business->name }} offer in one place —
                 {{ $highlights['codes'] }} {{ Str::plural('coupon code', $highlights['codes']) }} you can copy with one click
                 and {{ $highlights['deals'] }} {{ Str::plural('deal', $highlights['deals']) }} that apply without any code.
-                As a {{ strtolower($business->category->name) }} business serving {{ $business->city->full_name }},
+                As a {{ strtolower($business->category->name) }} business{{ $business->city ? ' serving '.$business->city->full_name : '' }},
                 {{ $business->name }} regularly runs promotions on services and purchases; expired offers are removed from this page automatically,
                 so everything you see here is current.
             </p>
@@ -204,9 +206,13 @@
                 To redeem a coupon, copy the code and present it in store or enter it at checkout online.
                 For details about the business itself — address, opening hours, phone numbers and the full set of customer reviews —
                 visit the <a href="{{ route('business.show', $business) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $business->name }} profile page</a>.
-                You can also compare offers from other jewelry stores in
-                <a href="{{ route('city.show', $business->city) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $business->city->name }}</a>
-                or browse all current promotions on the
+                @if($business->city)
+                    You can also compare offers from other jewelry stores in
+                    <a href="{{ route('city.show', $business->city) }}" class="font-medium hover:text-[color:var(--gold)]">{{ $business->city->name }}</a>
+                    or browse all current promotions on the
+                @else
+                    You can also browse all current promotions on the
+                @endif
                 <a href="{{ route('coupons.index') }}" class="font-medium hover:text-[color:var(--gold)]">Stores, Coupons &amp; Deals</a> page.
             </p>
         </div>

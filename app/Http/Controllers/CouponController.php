@@ -148,7 +148,7 @@ class CouponController extends Controller
     protected function buildFaq(Business $business, array $h): array
     {
         $name = $business->name;
-        $city = $business->city->full_name;
+        $city = $business->city?->full_name;
 
         $faq = [
             [
@@ -168,12 +168,19 @@ class CouponController extends Controller
                 'q' => "Are these {$name} offers verified?",
                 'a' => "Every offer listed here is submitted by the business and checked against its expiry date — expired coupons are removed from this page automatically.",
             ],
-            [
-                'q' => "Where is {$name} located?",
-                'a' => trim(($business->address ? "{$name} is located at {$business->address}, " : "{$name} is located in ") . $city . ".")
-                    . " See the store profile for the map, phone numbers and opening hours.",
-            ],
         ];
+
+        // Stores imported from the offers feed are online-only: no address, no
+        // city. "…is located in ." helps nobody, so drop the question instead.
+        if ($business->address || $city) {
+            $faq[] = [
+                'q' => "Where is {$name} located?",
+                'a' => ($business->address
+                        ? "{$name} is located at {$business->address}" . ($city ? ", {$city}" : '')
+                        : "{$name} is located in {$city}")
+                    . ". See the store profile for the map, phone numbers and opening hours.",
+            ];
+        }
 
         if ($h['best']) {
             $faq[] = [
