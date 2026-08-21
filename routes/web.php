@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 // ---------- Public ----------
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tools', [\App\Http\Controllers\ToolController::class, 'index'])->name('tools.index');
+Route::get('/tools/{slug}', [\App\Http\Controllers\ToolController::class, 'show'])->name('tools.show');
+
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 Route::post('/site-unlock', [SiteAccessController::class, 'unlock'])->name('site.unlock');

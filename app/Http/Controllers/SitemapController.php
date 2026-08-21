@@ -16,6 +16,11 @@ class SitemapController extends Controller
         // Static pages
         $urls[] = ['loc' => route('home'), 'priority' => '1.0', 'freq' => 'daily'];
         $urls[] = ['loc' => route('coupons.index'), 'priority' => '0.7', 'freq' => 'daily'];
+        $urls[] = ['loc' => route('tools.index'), 'priority' => '0.7', 'freq' => 'monthly'];
+
+        foreach (array_keys(\App\Http\Controllers\ToolController::TOOLS) as $toolSlug) {
+            $urls[] = ['loc' => route('tools.show', $toolSlug), 'priority' => '0.6', 'freq' => 'monthly'];
+        }
 
         // Categories (only those with at least one active business)
         $categories = Category::whereHas('businesses', fn ($q) => $q->where('is_active', true))->get();

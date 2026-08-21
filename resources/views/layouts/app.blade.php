@@ -48,6 +48,7 @@
         <nav class="flex items-center gap-2 sm:gap-6 text-sm">
             <a href="{{ route('home') }}" class="hover:text-[color:var(--champagne)] px-2 py-1">Home</a>
             <a href="{{ route('coupons.index') }}" class="hover:text-[color:var(--champagne)] px-2 py-1">Stores &amp; Deals</a>
+            <a href="{{ route('tools.index') }}" class="hover:text-[color:var(--champagne)] px-2 py-1">Tools</a>
             <a href="{{ route('search') }}" class="hidden sm:inline hover:text-[color:var(--champagne)] px-2 py-1">All businesses</a>
         </nav>
     </div>
@@ -72,6 +73,7 @@
                 <li><a href="{{ route('home') }}" class="hover:text-[color:var(--champagne)]">Browse by city</a></li>
                 <li><a href="{{ route('coupons.index') }}" class="hover:text-[color:var(--champagne)]">Stores, coupons &amp; deals</a></li>
                 <li><a href="{{ route('search') }}" class="hover:text-[color:var(--champagne)]">Search businesses</a></li>
+                <li><a href="{{ route('tools.index') }}" class="hover:text-[color:var(--champagne)]">Jewelry tools &amp; calculators</a></li>
             </ul>
         </div>
         <div>
