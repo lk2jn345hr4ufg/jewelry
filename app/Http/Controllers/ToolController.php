@@ -70,6 +70,46 @@ class ToolController extends Controller
             'title' => 'True Cost of Ownership',
             'blurb' => 'What a ring really costs once financing interest, insurance and decades of upkeep are counted.',
         ],
+        'hallmark-guide' => [
+            'title' => 'Hallmark Decoder',
+            'blurb' => 'Decode the tiny stamps inside your jewelry — 925, 750, PLAT, GF — to find out what metal you actually have.',
+        ],
+        'silver-value-calculator' => [
+            'title' => 'Silver & Platinum Value Calculator',
+            'blurb' => 'Melt value for sterling, platinum and palladium from weight, purity and spot price.',
+        ],
+        'chain-type-guide' => [
+            'title' => 'Chain Type Guide',
+            'blurb' => 'Compare cable, curb, rope, box and more on strength and repairability — which chains last and which kink forever.',
+        ],
+        'setting-type-guide' => [
+            'title' => 'Ring Setting Guide',
+            'blurb' => 'Prong, bezel, pavé, tension and more, rated on security, sparkle and snagging for your lifestyle.',
+        ],
+        'metal-allergy-checker' => [
+            'title' => 'Metal Allergy Checker',
+            'blurb' => 'Which metals are safe for nickel allergies and sensitive skin — and what to do about pieces you already own.',
+        ],
+        'jewelry-insurance-calculator' => [
+            'title' => 'Jewelry Insurance Calculator',
+            'blurb' => 'Find out how much of your collection your home policy actually covers, and what a rider would cost.',
+        ],
+        'diamond-certificate-guide' => [
+            'title' => 'Diamond Certificate Decoder',
+            'blurb' => 'Understand every line of a GIA report — cut, fluorescence, proportions — and which labs grade honestly.',
+        ],
+        'vintage-era-guide' => [
+            'title' => 'Vintage Era Identifier',
+            'blurb' => 'Identify Georgian, Victorian, Art Nouveau, Edwardian, Deco or Retro from style, metal and construction.',
+        ],
+        'watch-water-resistance' => [
+            'title' => 'Watch Water Resistance Decoder',
+            'blurb' => 'What your watch’s ATM rating really permits — 30 m does not mean you can swim in it.',
+        ],
+        'gemstone-durability-checker' => [
+            'title' => 'Gemstone Durability Checker',
+            'blurb' => 'Can that stone survive daily wear? Hardness, toughness and cleavage risk for 27 gemstones.',
+        ],
     ];
 
     public function index()
