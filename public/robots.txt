@@ -3,3 +3,4 @@ Disallow: /admin
 Disallow: /site-unlock
 
 Sitemap: https://gleamion.com/sitemap.xml
+Sitemap: https://gleamion.com/sitemap-tools.xml

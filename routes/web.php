@@ -16,6 +16,11 @@ Route::get('/tools', [\App\Http\Controllers\ToolController::class, 'index'])->na
 Route::get('/tools/{slug}', [\App\Http\Controllers\ToolController::class, 'show'])->name('tools.show');
 
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap-pages.xml', [\App\Http\Controllers\SitemapController::class, 'pages'])->name('sitemap.pages');
+Route::get('/sitemap-tools.xml', [\App\Http\Controllers\SitemapController::class, 'tools'])->name('sitemap.tools');
+Route::get('/sitemap-categories.xml', [\App\Http\Controllers\SitemapController::class, 'categories'])->name('sitemap.categories');
+Route::get('/sitemap-cities.xml', [\App\Http\Controllers\SitemapController::class, 'cities'])->name('sitemap.cities');
+Route::get('/sitemap-businesses.xml', [\App\Http\Controllers\SitemapController::class, 'businesses'])->name('sitemap.businesses');
 
 Route::post('/site-unlock', [SiteAccessController::class, 'unlock'])->name('site.unlock');
 Route::get('/cities/load', [HomeController::class, 'loadCities'])->name('cities.load');
