@@ -198,6 +198,46 @@ class ToolController extends Controller
             'title' => 'Necklace Layering Calculator',
             'blurb' => 'Exact chain lengths for a layered look that hangs cleanly instead of tangling.',
         ],
+        'ruby-guide' => [
+            'title' => 'Ruby Buying Guide',
+            'blurb' => 'Pigeon blood colour, Burmese origin, and why most cheap rubies are lead-glass filled.',
+        ],
+        'karat-fineness-converter' => [
+            'title' => 'Karat & Fineness Converter',
+            'blurb' => 'Convert karat, fineness and percentage purity, and see the pure gold weight in any piece.',
+        ],
+        'watch-complications-guide' => [
+            'title' => 'Watch Complications Guide',
+            'blurb' => 'Chronograph, GMT, moonphase, tourbillon — what each does, costs, and whether you will use it.',
+        ],
+        'custom-design-cost' => [
+            'title' => 'Custom Design Cost Estimator',
+            'blurb' => 'What a bespoke piece costs and how long it takes, step by step through the process.',
+        ],
+        'amber-turquoise-guide' => [
+            'title' => 'Amber & Turquoise Guide',
+            'blurb' => 'Two of the most faked materials — with home tests that genuinely help spot imitations.',
+        ],
+        'wedding-jewelry-timeline' => [
+            'title' => 'Wedding Jewelry Timeline',
+            'blurb' => 'Enter your date and see exactly when rings, bridal jewelry and gifts need ordering.',
+        ],
+        'jewelry-care-calendar' => [
+            'title' => 'Maintenance Calendar',
+            'blurb' => 'How often to clean, check prongs, replate and restring — the schedule that prevents lost stones.',
+        ],
+        'gemstone-rarity-table' => [
+            'title' => 'Gemstone Rarity & Price',
+            'blurb' => 'How rare each stone really is versus what it costs — and which are undervalued.',
+        ],
+        'workplace-jewelry-guide' => [
+            'title' => 'Jewelry at Work',
+            'blurb' => 'What is safe and permitted in healthcare, kitchens, workshops and labs — and what to wear instead.',
+        ],
+        'vintage-watch-checklist' => [
+            'title' => 'Vintage Watch Checklist',
+            'blurb' => 'Twelve checks before buying vintage: redials, franken-watches, over-polishing and service history.',
+        ],
     ];
 
     public function index()
