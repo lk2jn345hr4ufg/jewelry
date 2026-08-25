@@ -238,6 +238,46 @@ class ToolController extends Controller
             'title' => 'Vintage Watch Checklist',
             'blurb' => 'Twelve checks before buying vintage: redials, franken-watches, over-polishing and service history.',
         ],
+        'pendant-size-guide' => [
+            'title' => 'Pendant Size Guide',
+            'blurb' => 'Pendant proportions for your frame, and the chain thickness needed to carry the weight.',
+        ],
+        'ring-stacking-guide' => [
+            'title' => 'Ring Stacking Guide',
+            'blurb' => 'Build a stack that works — widths, metal hardness and why stacked rings fit tighter.',
+        ],
+        'watch-strap-guide' => [
+            'title' => 'Watch Strap Guide',
+            'blurb' => 'Leather, steel, NATO, rubber and mesh compared for your watch and how you wear it.',
+        ],
+        'childrens-jewelry-guide' => [
+            'title' => 'Children’s Jewelry Guide',
+            'blurb' => 'What is safe at each age — and the popular products worth avoiding entirely.',
+        ],
+        'signet-ring-guide' => [
+            'title' => 'Signet Ring Guide',
+            'blurb' => 'Face shapes and sizes, engraving styles, and which finger tradition puts it on.',
+        ],
+        'charm-bracelet-guide' => [
+            'title' => 'Charm Bracelet Guide',
+            'blurb' => 'Compare charm systems and work out how many charms your wrist will actually carry.',
+        ],
+        'memorial-jewelry-guide' => [
+            'title' => 'Memorial & Keepsake Jewelry',
+            'blurb' => 'Ashes, hair, fingerprints or something symbolic — options, costs and what to ask a maker.',
+        ],
+        'brooch-guide' => [
+            'title' => 'Brooch & Pin Guide',
+            'blurb' => 'Clasp types by era, where to pin, and which fabrics a brooch will permanently damage.',
+        ],
+        'anklet-guide' => [
+            'title' => 'Anklet Size & Style Guide',
+            'blurb' => 'Sizing plus which metals and chain styles survive sand, chlorine and shoes.',
+        ],
+        'jewelry-storage-guide' => [
+            'title' => 'Jewelry Storage Guide',
+            'blurb' => 'Store each material so it does not scratch, tarnish or tangle — plus travel advice.',
+        ],
     ];
 
     public function index()
