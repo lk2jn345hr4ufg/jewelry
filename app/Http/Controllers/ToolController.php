@@ -110,6 +110,94 @@ class ToolController extends Controller
             'title' => 'Gemstone Durability Checker',
             'blurb' => 'Can that stone survive daily wear? Hardness, toughness and cleavage risk for 27 gemstones.',
         ],
+        'earring-style-guide' => [
+            'title' => 'Earring Style Guide',
+            'blurb' => 'Studs, hoops, huggies, drops and cuffs compared on weight, security and what suits your face and routine.',
+        ],
+        'pearl-guide' => [
+            'title' => 'Pearl Buying Guide',
+            'blurb' => 'Akoya, freshwater, Tahitian and South Sea compared — plus how to judge lustre and spot an imitation.',
+        ],
+        'ring-resizing-guide' => [
+            'title' => 'Ring Resizing Guide',
+            'blurb' => 'Can your ring be resized, by how much and at what cost? Check by metal and band style first.',
+        ],
+        'engraving-planner' => [
+            'title' => 'Engraving Planner',
+            'blurb' => 'Check your inscription actually fits the band, preview it in three fonts, and browse ideas that age well.',
+        ],
+        'watch-movement-guide' => [
+            'title' => 'Watch Movement Guide',
+            'blurb' => 'Quartz, automatic, manual, solar and Spring Drive — accuracy, service costs and which suits how you live.',
+        ],
+        'gemstone-treatment-guide' => [
+            'title' => 'Gemstone Treatment Guide',
+            'blurb' => 'Heating, oiling, fracture filling, dyeing — which treatments are normal and which quietly destroy value.',
+        ],
+        'wedding-band-matching' => [
+            'title' => 'Wedding Band Matching',
+            'blurb' => 'Find a band that sits flush against your engagement ring in a metal that won’t wear it down.',
+        ],
+        'appraisal-vs-resale' => [
+            'title' => 'Appraisal vs Resale Value',
+            'blurb' => 'Why the appraisal says $8,000 and buyers offer $1,500 — replacement, market and liquidation value explained.',
+        ],
+        'ear-piercing-guide' => [
+            'title' => 'Ear Piercing Guide',
+            'blurb' => 'Compare placements on pain and healing time, with aftercare that reflects current practice.',
+        ],
+        'engagement-ring-style-quiz' => [
+            'title' => 'Engagement Ring Style Quiz',
+            'blurb' => 'Five questions about their taste and lifestyle to narrow down a style before you set foot in a shop.',
+        ],
+        'diamond-color-scale' => [
+            'title' => 'Diamond Colour Scale',
+            'blurb' => 'The D–Z scale visualised, with the best-value grade for your setting metal.',
+        ],
+        'diamond-clarity-scale' => [
+            'title' => 'Diamond Clarity Scale',
+            'blurb' => 'FL to I3 explained, and the lowest eye-clean grade at any carat weight.',
+        ],
+        'gold-color-guide' => [
+            'title' => 'Gold Colour Guide',
+            'blurb' => 'Yellow, white, rose and green gold — what makes each colour and how it ages.',
+        ],
+        'where-to-sell-jewelry' => [
+            'title' => 'Where to Sell Jewelry',
+            'blurb' => 'Pawn, dealer, consignment, auction or private sale — realistic payouts for each.',
+        ],
+        'repair-cost-estimator' => [
+            'title' => 'Repair Cost Estimator',
+            'blurb' => 'What common repairs cost: soldering, re-tipping, restringing, replating and more.',
+        ],
+        'body-jewelry-gauge' => [
+            'title' => 'Body Jewelry Gauge Converter',
+            'blurb' => 'Gauge to millimetres and inches, with standard sizes for every piercing.',
+        ],
+        'jade-buying-guide' => [
+            'title' => 'Jade Buying Guide',
+            'blurb' => 'Type A, B and C explained — and why the difference is worth thousands.',
+        ],
+        'sapphire-colour-guide' => [
+            'title' => 'Sapphire Colour & Origin Guide',
+            'blurb' => 'Every sapphire colour and what Kashmir, Burma or Ceylon origin does to the price.',
+        ],
+        'opal-type-guide' => [
+            'title' => 'Opal Type Guide',
+            'blurb' => 'Black, boulder and crystal opal by value — plus solid vs doublet vs triplet.',
+        ],
+        'cut-proportion-checker' => [
+            'title' => 'Cut Proportion Checker',
+            'blurb' => 'Enter table and depth percentages to check a stone’s proportions against the ideal.',
+        ],
+        'mens-jewelry-guide' => [
+            'title' => 'Men’s Jewelry Guide',
+            'blurb' => 'Ring widths, chain weights and cufflinks sized to your build and work environment.',
+        ],
+        'necklace-layering-calculator' => [
+            'title' => 'Necklace Layering Calculator',
+            'blurb' => 'Exact chain lengths for a layered look that hangs cleanly instead of tangling.',
+        ],
     ];
 
     public function index()
