@@ -32,7 +32,6 @@
     </form>
 
         @foreach(['all' => 'All', 'active' => 'Active', 'hidden' => 'Disabled', 'imported' => 'From API'] as $key => $label)
-        @foreach(['all' => 'All', 'active' => 'Active', 'hidden' => 'Disabled'] as $key => $label)
             <a href="{{ route('admin.businesses.index', array_filter(['status' => $key, 'q' => request('q'), 'min_city' => $minCity ?: null, 'city_id' => $cityId ?: null, 'sort' => $sort, 'dir' => $dir])) }}"
                @class(['chip', '!border-gold !bg-velvet !text-white' => $status === $key])>
                 {{ $label }} <span @class(['text-ink/40', '!text-goldlight' => $status === $key])>{{ $counts[$key] }}</span>
